@@ -1,68 +1,127 @@
 import { useState, useEffect } from 'react';
 import type { Challenge } from '@/types/rewards';
-
-const MOCK_CHALLENGES: Challenge[] = [
-  {
-    id: '1',
-    title: 'Daily Login Streak',
-    description: 'Log in for 7 consecutive days',
-    reward: 100,
-    type: 'daily',
-    progress: 4,
-    target: 7,
-    completed: false,
-    expiresAt: new Date(Date.now() + 86400000),
-  },
-  {
-    id: '2',
-    title: 'Gaming Champion',
-    description: 'Win 5 games in any supported dApp',
-    reward: 250,
-    type: 'gaming',
-    progress: 3,
-    target: 5,
-    completed: false,
-  },
-  {
-    id: '3',
-    title: 'Social Butterfly',
-    description: 'Share on 3 social platforms',
-    reward: 150,
-    type: 'social',
-    progress: 1,
-    target: 3,
-    completed: false,
-  },
-  {
-    id: '4',
-    title: 'First Claim',
-    description: 'Claim your first MUSD rewards',
-    reward: 50,
-    type: 'daily',
-    progress: 0,
-    target: 1,
-    completed: false,
-  },
-];
+import { useUserProgress } from './useUserProgress';
 
 export const useChallenges = () => {
-  const [challenges, setChallenges] = useState<Challenge[]>(MOCK_CHALLENGES);
+  const { progress, checkDailyLogin, recordGameWin, recordShare } = useUserProgress();
+  
+  const [challenges, setChallenges] = useState<Challenge[]>([
+    {
+      id: '1',
+      title: 'Daily Login Streak',
+      description: 'Log in for 7 consecutive days',
+      reward: 100,
+      type: 'daily',
+      progress: progress.streak,
+      target: 7,
+      completed: false,
+      expiresAt: new Date(Date.now() + 86400000),
+    },
+    {
+      id: '2',
+      title: 'Gaming Champion',
+      description: 'Win 5 games in any supported dApp',
+      reward: 250,
+      type: 'gaming',
+      progress: progress.gameWins,
+      target: 5,
+      completed: false,
+    },
+    {
+      id: '3',
+      title: 'Social Butterfly',
+      description: 'Share on 3 social platforms',
+      reward: 150,
+      type: 'social',
+      progress: progress.shares,
+      target: 3,
+      completed: false,
+    },
+    {
+      id: '4',
+      title: 'First Claim',
+      description: 'Claim your first MUSD rewards',
+      reward: 50,
+      type: 'daily',
+      progress: 0,
+      target: 1,
+      completed: false,
+    },
+  ]);
+
+  useEffect(() => {
+    setChallenges([
+      {
+        id: '1',
+        title: 'Daily Login Streak',
+        description: 'Log in for 7 consecutive days',
+        reward: 100,
+        type: 'daily',
+        progress: progress.streak,
+        target: 7,
+        completed: false,
+        expiresAt: new Date(Date.now() + 86400000),
+      },
+      {
+        id: '2',
+        title: 'Gaming Champion',
+        description: 'Win 5 games in any supported dApp',
+        reward: 250,
+        type: 'gaming',
+        progress: progress.gameWins,
+        target: 5,
+        completed: false,
+      },
+      {
+        id: '3',
+        title: 'Social Butterfly',
+        description: 'Share on 3 social platforms',
+        reward: 150,
+        type: 'social',
+        progress: progress.shares,
+        target: 3,
+        completed: false,
+      },
+      {
+        id: '4',
+        title: 'First Claim',
+        description: 'Claim your first MUSD rewards',
+        reward: 50,
+        type: 'daily',
+        progress: 0,
+        target: 1,
+        completed: false,
+      },
+    ]);
+  }, [progress]);
 
   const completeChallenge = (challengeId: string) => {
-    setChallenges(prev =>
-      prev.map(c =>
-        c.id === challengeId
-          ? { ...c, progress: c.target, completed: true }
-          : c
-      )
-    );
+    let result = { completed: false, reward: 0 };
+    
+    switch (challengeId) {
+      case '1': // Daily Login Streak
+        result = checkDailyLogin();
+        break;
+      case '2': // Gaming Champion
+        result = recordGameWin();
+        break;
+      case '3': // Social Butterfly
+        result = recordShare();
+        break;
+    }
+
+    if (result.completed) {
+      console.log(`💰 Reward sent: +${result.reward} points`);
+    }
+
+    return result;
   };
 
-  const updateProgress = (challengeId: string, progress: number) => {
+  const updateProgress = (challengeId: string, progressValue: number) => {
     setChallenges(prev =>
       prev.map(c =>
         c.id === challengeId
-          ? { ...c, progress: Math.min(progress, c.target) }
+          ? { ...c, progress: Math.min(progressValue, c.target) }
           : c
       )
     );
@@ -72,5 +131,6 @@ export const useChallenges = () => {
     challenges,
     completeChallenge,
     updateProgress,
+    userProgress: progress,
   };
 };

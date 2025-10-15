@@ -22,8 +22,12 @@ export const ChallengesSection = () => {
   const { challenges, completeChallenge } = useChallenges();
 
   const handleComplete = (id: string, title: string) => {
-    completeChallenge(id);
-    toast.success(`Challenge completed: ${title}!`);
+    const result = completeChallenge(id);
+    if (result.completed) {
+      toast.success(`Challenge completed: ${title}! +${result.reward} points earned!`);
+    } else {
+      toast.info(`Progress updated for: ${title}`);
+    }
   };
 
   return (
