@@ -9,7 +9,7 @@ export const config = createConfig({
       projectId: '696956c426d467cb2aed00d4b0a543b2',
     }),
     coinbaseWallet({
-      appName: 'Bitcoin Rewards Hub',
+      appName: 'Mezo IQ',
     }),
   ],
   transports: {
