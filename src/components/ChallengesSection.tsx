@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -5,6 +6,7 @@ import { useChallenges } from '@/hooks/useChallenges';
 import { Badge } from '@/components/ui/badge';
 import { Gamepad2, Users, Calendar, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { SocialShareDialog } from './SocialShareDialog';
 
 const typeIcons = {
   gaming: Gamepad2,
@@ -20,13 +22,36 @@ const typeColors = {
 
 export const ChallengesSection = () => {
   const { challenges, completeChallenge } = useChallenges();
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [pendingChallengeId, setPendingChallengeId] = useState<string | null>(null);
 
   const handleComplete = (id: string, title: string) => {
+    // If it's the Social Butterfly challenge, open share dialog
+    if (id === '3') {
+      setPendingChallengeId(id);
+      setShareDialogOpen(true);
+      return;
+    }
+
     const result = completeChallenge(id);
     if (result.completed) {
       toast.success(`Challenge completed: ${title}! +${result.reward} points earned!`);
     } else {
       toast.info(`Progress updated for: ${title}`);
+    }
+  };
+
+  const handleShare = () => {
+    if (pendingChallengeId) {
+      const result = completeChallenge(pendingChallengeId);
+      setShareDialogOpen(false);
+      setPendingChallengeId(null);
+      
+      if (result.completed) {
+        toast.success(`Challenge completed! +${result.reward} points earned! 🎉`);
+      } else {
+        toast.info('Progress updated! Keep sharing! 💪');
+      }
     }
   };
 
@@ -97,6 +122,12 @@ export const ChallengesSection = () => {
           );
         })}
       </div>
+
+      <SocialShareDialog 
+        open={shareDialogOpen}
+        onOpenChange={setShareDialogOpen}
+        onShare={handleShare}
+      />
     </div>
   );
 };
