@@ -3,7 +3,7 @@ import type { Challenge } from '@/types/rewards';
 import { useUserProgress } from './useUserProgress';
 
 export const useChallenges = () => {
-  const { progress, checkDailyLogin, recordGameWin, recordShare } = useUserProgress();
+  const { progress, checkDailyLogin, recordGameWin, recordShare, recordClaim } = useUserProgress();
   
   const [challenges, setChallenges] = useState<Challenge[]>([
     {
@@ -43,9 +43,9 @@ export const useChallenges = () => {
       description: 'Claim your first MUSD rewards',
       reward: 50,
       type: 'daily',
-      progress: 0,
+      progress: progress.claims,
       target: 1,
-      completed: false,
+      completed: progress.claims >= 1,
     },
   ]);
 
@@ -88,9 +88,9 @@ export const useChallenges = () => {
         description: 'Claim your first MUSD rewards',
         reward: 50,
         type: 'daily',
-        progress: 0,
+        progress: progress.claims,
         target: 1,
-        completed: false,
+        completed: progress.claims >= 1,
       },
     ]);
   }, [progress]);
@@ -107,6 +107,9 @@ export const useChallenges = () => {
         break;
       case '3': // Social Butterfly
         result = recordShare();
+        break;
+      case '4': // First Claim
+        result = recordClaim();
         break;
     }
 

@@ -5,6 +5,7 @@ interface UserProgress {
   lastLogin: string | null;
   gameWins: number;
   shares: number;
+  claims: number;
   points: number;
   totalEarned: number;
 }
@@ -21,6 +22,7 @@ const getInitialProgress = (): UserProgress => {
     lastLogin: null,
     gameWins: 0,
     shares: 0,
+    claims: 0,
     points: 0,
     totalEarned: 0,
   };
@@ -101,12 +103,34 @@ export const useUserProgress = () => {
     return { completed: false, reward: 0 };
   };
 
+  const recordClaim = (): { completed: boolean; reward: number } => {
+    const newClaims = progress.claims + 1;
+    console.log(`💰 Reward claimed. First claim: ${newClaims}/1`);
+    
+    if (newClaims >= 1) {
+      setProgress(prev => ({
+        ...prev,
+        claims: newClaims,
+        points: prev.points + 50,
+        totalEarned: prev.totalEarned + 50,
+      }));
+      return { completed: true, reward: 50 };
+    } else {
+      setProgress(prev => ({
+        ...prev,
+        claims: newClaims,
+      }));
+    }
+    return { completed: false, reward: 0 };
+  };
+
   const resetProgress = () => {
     const initial = {
       streak: 0,
       lastLogin: null,
       gameWins: 0,
       shares: 0,
+      claims: 0,
       points: 0,
       totalEarned: 0,
     };
@@ -119,6 +143,7 @@ export const useUserProgress = () => {
     checkDailyLogin,
     recordGameWin,
     recordShare,
+    recordClaim,
     resetProgress,
   };
 };

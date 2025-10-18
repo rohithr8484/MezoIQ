@@ -4,10 +4,20 @@ import { useMezoContracts } from '@/hooks/useMezoContracts';
 import { Coins, TrendingUp, Clock, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { ClaimDialog } from './ClaimDialog';
+import { useChallenges } from '@/hooks/useChallenges';
+import { toast } from 'sonner';
 
 export const RewardsDashboard = () => {
   const { rewardBalance, isConnected } = useMezoContracts();
+  const { completeChallenge } = useChallenges();
   const [showClaimDialog, setShowClaimDialog] = useState(false);
+
+  const handleClaimSuccess = () => {
+    const result = completeChallenge('4');
+    if (result.completed) {
+      toast.success(`First Claim challenge completed! +${result.reward} points earned! 🎉`);
+    }
+  };
 
   const stats = [
     {
@@ -82,6 +92,7 @@ export const RewardsDashboard = () => {
         open={showClaimDialog}
         onOpenChange={setShowClaimDialog}
         availableAmount={rewardBalance.pending}
+        onClaimSuccess={handleClaimSuccess}
       />
     </>
   );

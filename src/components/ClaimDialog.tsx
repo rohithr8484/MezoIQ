@@ -18,9 +18,10 @@ interface ClaimDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   availableAmount: number;
+  onClaimSuccess?: () => void;
 }
 
-export const ClaimDialog = ({ open, onOpenChange, availableAmount }: ClaimDialogProps) => {
+export const ClaimDialog = ({ open, onOpenChange, availableAmount, onClaimSuccess }: ClaimDialogProps) => {
   const { claimRewards, estimateGas, isPending } = useMezoContracts();
   const [amount, setAmount] = useState(availableAmount.toString());
   const [gasEstimate, setGasEstimate] = useState<GasEstimate | null>(null);
@@ -65,6 +66,7 @@ export const ClaimDialog = ({ open, onOpenChange, availableAmount }: ClaimDialog
     try {
       await claimRewards(numAmount);
       toast.success(`Successfully claimed ${numAmount} MUSD!`);
+      onClaimSuccess?.();
       onOpenChange(false);
     } catch (error) {
       toast.error('Failed to claim rewards');
