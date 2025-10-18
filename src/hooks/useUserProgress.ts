@@ -104,22 +104,15 @@ export const useUserProgress = () => {
   };
 
   const recordClaim = (): { completed: boolean; reward: number } => {
-    const newClaims = progress.claims + 1;
-    console.log(`💰 Reward claimed. First claim: ${newClaims}/1`);
-    
-    if (newClaims >= 1) {
+    if (progress.claims === 0) {
+      console.log(`💰 First reward claimed!`);
       setProgress(prev => ({
         ...prev,
-        claims: newClaims,
+        claims: 1,
         points: prev.points + 50,
         totalEarned: prev.totalEarned + 50,
       }));
       return { completed: true, reward: 50 };
-    } else {
-      setProgress(prev => ({
-        ...prev,
-        claims: newClaims,
-      }));
     }
     return { completed: false, reward: 0 };
   };
