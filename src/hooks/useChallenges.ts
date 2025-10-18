@@ -20,7 +20,7 @@ export const useChallenges = () => {
     {
       id: '2',
       title: 'Gaming Champion',
-      description: 'Win 5 games in any supported dApp',
+      description: 'Play 5 games in any supported dApp',
       reward: 250,
       type: 'gaming',
       progress: progress.gameWins,
@@ -65,7 +65,7 @@ export const useChallenges = () => {
       {
         id: '2',
         title: 'Gaming Champion',
-        description: 'Win 5 games in any supported dApp',
+        description: 'Play 5 games in any supported dApp',
         reward: 250,
         type: 'gaming',
         progress: progress.gameWins,
