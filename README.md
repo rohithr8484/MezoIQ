@@ -1,4 +1,4 @@
-# 🪙 Bitcoin Everywhere
+# 🪙 MezoIQ
 
 Build applications that integrate Bitcoin into the digital experiences people already use, regardless of their crypto knowledge level.
 
