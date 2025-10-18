@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
+# 🪙 Bitcoin Everywhere
 
-## Project info
+Build applications that integrate Bitcoin into the digital experiences people already use, regardless of their crypto knowledge level.
 
-**URL**: https://lovable.dev/projects/0d2c4e43-dfba-45ed-b1db-19e183a6207c
+## 🚀 Overview
 
-## How can I edit this code?
+This platform enables building Bitcoin-powered experiences for crypto natives, mainstream users, or bridging both audiences. Think gaming, social platforms, e-commerce, entertainment, and other digital services.
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+### 🔐 Wallet Integration
+Connect popular Bitcoin wallets and manage transactions seamlessly with multi-wallet support.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0d2c4e43-dfba-45ed-b1db-19e183a6207c) and start prompting.
+### 🏆 Rewards & Challenges
+Implement gamified experiences with Bitcoin rewards, leaderboards, and mini-games to engage users.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 📱 Social Sharing
+Share Bitcoin achievements, referrals, and rewards socially across platforms.
 
-**Use your preferred IDE**
+### 💰 MUSD Integration
+Seamless integration with MUSD for stable transactions and reward distribution.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📊 Pyth Oracle Integration
+Low-latency pull oracle design where users can pull price updates onchain when needed.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🌐 Cross-Platform Ready
+Built with React, Vite, and TypeScript for smooth development and deployment.
 
-Follow these steps:
+## 🛠 Tech Stack
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Frontend
+- **React** - Modern UI library
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Radix UI** - Accessible component primitives
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### State Management
+- **React Query** - Server state management
+- **Zod** - Schema validation
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Bitcoin & Oracle Integration
+- **@mezo-org/passport** - Bitcoin wallet connectivity
+- **RainbowKit** - Wallet management
+- **Sats Connect** - Bitcoin transaction handling
+- **Wagmi** - React Hooks for blockchain
+- **Viem** - Blockchain interaction library
+- **MUSD SDK** - Stablecoin integration
+- **Pyth Network** - Real-time price oracle (400ms updates)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### UI/UX Enhancements
+- **Lucide Icons** - Beautiful iconography
+- **Sonner** - Toast notifications
+- **Embla Carousel** - Smooth carousel components
+
+### Routing & Forms
+- **React Router DOM** - Client-side routing
+- **React Hook Form** - Form handling with resolvers
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/rohithr8484/bitcoin-everywhere.git
+cd bitcoin-everywhere
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open your browser at `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+##Usage
 
-**Use GitHub Codespaces**
+## 🔧 Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Available Scripts
 
-## What technologies are used for this project?
+```bash
+# Development server
+npm run dev
 
-This project is built with:
+# Production build
+npm run build
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Preview production build
+npm run preview
 
-## How can I deploy this project?
+# Linting
+npm run lint
 
-Simply open [Lovable](https://lovable.dev/projects/0d2c4e43-dfba-45ed-b1db-19e183a6207c) and click on Share -> Publish.
+# Type checking
+npm run type-check
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 🤝 Contributing
 
-Yes, you can!
+Contributions are welcome! Feel free to submit pull requests or open issues to improve the project.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📄 License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is private. Please contact the maintainer for access.
+
+---
+
+**Bitcoin Everywhere** - Making Bitcoin accessible in every digital experience 🚀
+
+*Built with modern web technologies and Bitcoin-first principles*
