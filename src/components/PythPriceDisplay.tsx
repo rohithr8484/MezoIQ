@@ -12,30 +12,38 @@ export const PythPriceDisplay = () => {
 
   useEffect(() => {
     let previousPrice: number | null = null;
+    let mounted = true;
 
     const fetchPrice = async () => {
       try {
         const data = await getBTCPrice();
-        setPriceData(data);
-        setError(null);
-        
-        if (previousPrice !== null) {
-          setPriceChange(data.price - previousPrice);
+        if (mounted) {
+          setPriceData(data);
+          setError(null);
+          setIsLoading(false);
+          
+          if (previousPrice !== null) {
+            setPriceChange(data.price - previousPrice);
+          }
+          previousPrice = data.price;
         }
-        previousPrice = data.price;
       } catch (err) {
-        setError('Failed to fetch price');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
+        console.error('Pyth price fetch error:', err);
+        if (mounted) {
+          setError('Unable to load BTC price');
+          setIsLoading(false);
+        }
       }
     };
 
     fetchPrice();
-    // Update every 30 seconds (Pyth updates every 400ms but we don't need that frequency for display)
+    // Update every 30 seconds
     const interval = setInterval(fetchPrice, 30000);
 
-    return () => clearInterval(interval);
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   if (isLoading) {

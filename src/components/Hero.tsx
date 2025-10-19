@@ -1,5 +1,6 @@
 import { WalletConnectButton } from './WalletConnectButton';
 import { BoarWalletButton } from './BoarWalletButton';
+import { PythPriceDisplay } from './PythPriceDisplay';
 import { Coins, Zap, Trophy } from 'lucide-react';
 
 export const Hero = () => {
@@ -59,6 +60,11 @@ export const Hero = () => {
                 Powered by Mezo's stablecoin for seamless transactions
               </p>
             </div>
+          </div>
+
+          {/* Pyth Network Live Price */}
+          <div className="max-w-md mx-auto py-4">
+            <PythPriceDisplay />
           </div>
 
           {/* Wallet connection buttons */}
