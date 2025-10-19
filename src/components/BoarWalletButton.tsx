@@ -1,35 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Wallet } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAccount, useSwitchChain } from 'wagmi';
+import { mezoMainnet } from '@/config/wagmi';
 
 export const BoarWalletButton = () => {
-  const [isConnected, setIsConnected] = useState(false);
-  const [address, setAddress] = useState<string | null>(null);
+  const { address: wagmiAddress, isConnected: wagmiConnected, chainId } = useAccount();
+  const { switchChain } = useSwitchChain();
+  const [isBoarWallet, setIsBoarWallet] = useState(false);
+
+  useEffect(() => {
+    // Check if connected via Boar wallet or on Mezo chain
+    if (wagmiConnected && chainId === mezoMainnet.id) {
+      setIsBoarWallet(true);
+    }
+  }, [wagmiConnected, chainId]);
 
   const handleConnect = async () => {
     try {
-      // Boar wallet connection with Mezo mainnet
+      // Switch to Mezo mainnet using Boar endpoints
       // RPC: https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
       // WSS: wss://rpc-ws.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
       // Chain ID: 31612
       
-      toast.success('Boar wallet connected to Mezo Mainnet!');
-      setIsConnected(true);
-      setAddress('bc1q...' + Math.random().toString(36).substring(7));
+      if (wagmiConnected && chainId !== mezoMainnet.id) {
+        await switchChain({ chainId: mezoMainnet.id });
+        toast.success('Switched to Mezo Mainnet!');
+        setIsBoarWallet(true);
+      } else {
+        toast.info('Please connect a wallet first, then switch to Mezo Mainnet');
+      }
     } catch (error) {
-      toast.error('Failed to connect Boar wallet');
+      toast.error('Failed to switch to Mezo Mainnet');
       console.error(error);
     }
   };
 
   const handleDisconnect = () => {
-    setIsConnected(false);
-    setAddress(null);
-    toast.info('Boar wallet disconnected');
+    setIsBoarWallet(false);
+    toast.info('Switched away from Mezo Mainnet');
   };
 
-  if (isConnected && address) {
+  if (isBoarWallet && wagmiAddress && chainId === mezoMainnet.id) {
     return (
       <Button
         variant="wallet"
@@ -38,7 +51,7 @@ export const BoarWalletButton = () => {
         className="gap-3"
       >
         <Wallet className="w-5 h-5" />
-        {address.slice(0, 8)}...{address.slice(-6)}
+        Mezo: {wagmiAddress.slice(0, 6)}...{wagmiAddress.slice(-4)}
       </Button>
     );
   }
@@ -51,7 +64,7 @@ export const BoarWalletButton = () => {
       className="gap-3"
     >
       <Wallet className="w-5 h-5" />
-      Connect with Boar
+      Switch to Mezo
     </Button>
   );
 };
