@@ -1,5 +1,16 @@
-const PYTH_API = 'https://hermes.pyth.network/api/latest_price_feeds';
-const BTC_FEED_ID = '0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b82c6d38c5e6b11d27f02b3';
+import { HermesClient } from '@pythnetwork/hermes-client';
+
+// Pyth Network Hermes endpoint
+const HERMES_ENDPOINT = 'https://hermes.pyth.network';
+
+// Correct BTC/USD price feed ID from Pyth Network
+const BTC_FEED_ID = '0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43';
+
+// Pyth contract addresses on Mezo
+export const PYTH_CONTRACTS = {
+  mainnet: '0x2880aB155794e7179c9eE2e38200202908C17B43',
+  testnet: '0x2880aB155794e7179c9eE2e38200202908C17B43',
+} as const;
 
 export interface BTCPrice {
   price: number;
@@ -9,14 +20,20 @@ export interface BTCPrice {
 
 export const getBTCPrice = async (): Promise<BTCPrice> => {
   try {
-    const response = await fetch(`${PYTH_API}?ids[]=${BTC_FEED_ID}`);
-    const data = await response.json();
+    const connection = new HermesClient(HERMES_ENDPOINT, {});
     
-    const priceData = data[0].price;
-    const price = priceData.price / Math.pow(10, Math.abs(priceData.expo));
-    const confidence = priceData.conf / Math.pow(10, Math.abs(priceData.expo));
+    // Get latest price updates for BTC/USD
+    const priceUpdates = await connection.getLatestPriceUpdates([BTC_FEED_ID]);
     
-    console.log(`₿ BTC Price: $${price.toFixed(2)}`);
+    if (!priceUpdates.parsed || priceUpdates.parsed.length === 0) {
+      throw new Error('No price data available');
+    }
+
+    const priceData = priceUpdates.parsed[0].price;
+    const price = Number(priceData.price) * Math.pow(10, priceData.expo);
+    const confidence = Number(priceData.conf) * Math.pow(10, priceData.expo);
+    
+    console.log(`₿ BTC Price: $${price.toFixed(2)} (via Pyth Network)`);
     
     return {
       price,
@@ -24,7 +41,7 @@ export const getBTCPrice = async (): Promise<BTCPrice> => {
       confidence,
     };
   } catch (error) {
-    console.error('Failed to fetch BTC price from Pyth:', error);
+    console.error('Failed to fetch BTC price from Pyth Network:', error);
     throw error;
   }
 };

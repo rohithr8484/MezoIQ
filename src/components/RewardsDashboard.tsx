@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ClaimDialog } from './ClaimDialog';
 import { useChallenges } from '@/hooks/useChallenges';
 import { toast } from 'sonner';
+import { PythPriceDisplay } from './PythPriceDisplay';
 
 export const RewardsDashboard = () => {
   const { rewardBalance, isConnected } = useMezoContracts();
@@ -66,6 +67,10 @@ export const RewardsDashboard = () => {
             <p className="text-sm text-muted-foreground">{stat.label}</p>
           </Card>
         ))}
+      </div>
+
+      <div className="mt-6">
+        <PythPriceDisplay />
       </div>
 
       {rewardBalance.pending > 0 && (

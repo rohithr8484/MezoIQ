@@ -3,6 +3,7 @@ import { RewardsDashboard } from './RewardsDashboard';
 import { ChallengesSection } from './ChallengesSection';
 import { LeaderboardSection } from './LeaderboardSection';
 import { ReferralSection } from './ReferralSection';
+import { PythPriceDisplay } from './PythPriceDisplay';
 import { Trophy, Target, Users, Share2 } from 'lucide-react';
 
 export const RewardsHub = () => {

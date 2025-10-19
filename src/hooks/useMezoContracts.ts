@@ -3,7 +3,6 @@ import { parseEther, formatEther } from 'viem';
 import { useState, useEffect } from 'react';
 import type { RewardBalance, GasEstimate } from '@/types/rewards';
 import { useUserProgress } from './useUserProgress';
-import { getBTCPrice } from '@/utils/pythPrice';
 
 // Mezo contract addresses (placeholder - replace with actual addresses)
 const MEZO_REWARDS_CONTRACT = '0x0000000000000000000000000000000000000000';
@@ -13,7 +12,6 @@ const TBTC_CONTRACT = '0x0000000000000000000000000000000000000000';
 export const useMezoContracts = () => {
   const { address, isConnected } = useAccount();
   const { progress } = useUserProgress();
-  const [btcPrice, setBtcPrice] = useState<number | null>(null);
   const [rewardBalance, setRewardBalance] = useState<RewardBalance>({
     points: 0,
     pending: 0,
@@ -21,21 +19,6 @@ export const useMezoContracts = () => {
     musdBalance: 0,
     tbtcBalance: 0,
   });
-
-  // Fetch BTC price on mount
-  useEffect(() => {
-    const fetchPrice = async () => {
-      try {
-        const priceData = await getBTCPrice();
-        setBtcPrice(priceData.price);
-      } catch (error) {
-        console.error('Failed to fetch BTC price:', error);
-      }
-    };
-    fetchPrice();
-    const interval = setInterval(fetchPrice, 60000); // Update every minute
-    return () => clearInterval(interval);
-  }, []);
 
   // Sync rewards with user progress
   useEffect(() => {
@@ -129,6 +112,5 @@ export const useMezoContracts = () => {
     swapMUSDToTBTC,
     isPending,
     isConnected,
-    btcPrice,
   };
 };
