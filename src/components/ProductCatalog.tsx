@@ -38,10 +38,6 @@ export const ProductCatalog = () => {
             Shop with MUSD or BTC • Real-time oracle pricing • 2% cashback on every purchase
           </p>
           
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <NetworkBadge />
-          </div>
-          
           {!isConnected && (
             <div className="max-w-2xl mx-auto mt-6 p-6 bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/30 rounded-xl shadow-glow animate-fade-in">
               <div className="space-y-4">
