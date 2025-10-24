@@ -32,18 +32,18 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Hero Title with enhanced gradient */}
+          {/* Hero Title */}
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-fade-in-up leading-tight tracking-tight">
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground animate-fade-in-up leading-tight">
               Mezo IQ
             </h1>
-            <div className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent animate-shimmer" />
+            <div className="h-1 w-24 mx-auto bg-primary animate-shimmer" />
           </div>
 
-          {/* Enhanced Subtitle */}
-          <p className="text-xl md:text-3xl text-foreground/90 max-w-3xl mx-auto animate-fade-in-up font-light leading-relaxed" style={{ animationDelay: '0.2s' }}>
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up font-normal leading-relaxed" style={{ animationDelay: '0.2s' }}>
             Earn rewards, complete challenges, and climb the leaderboard on the{' '}
-            <span className="font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="font-semibold text-primary">
               Bitcoin-powered blockchain
             </span>
           </p>
