@@ -38,20 +38,26 @@ export const UseCases = () => {
           {useCases.map((useCase, index) => (
             <div
               key={useCase.title}
-              className="bg-card rounded-xl p-8 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-fade-in group"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="bg-card rounded-xl p-8 border border-border hover:border-secondary/50 hover:shadow-[0_0_30px_rgba(56,139,253,0.3)] transition-all duration-500 animate-scale-in group transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden"
+              style={{ animationDelay: `${index * 0.15}s` }}
             >
-              <div className="space-y-4">
+              {/* Animated background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="space-y-4 relative z-10">
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl">{useCase.emoji}</span>
-                  <h3 className="font-semibold text-foreground text-xl">
+                  <span className="text-4xl transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 inline-block">{useCase.emoji}</span>
+                  <h3 className="font-semibold text-foreground text-xl group-hover:text-secondary transition-colors duration-300">
                     {useCase.title}
                   </h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-300">
                   {useCase.description}
                 </p>
               </div>
+              
+              {/* Shine effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </div>
           ))}
         </div>
