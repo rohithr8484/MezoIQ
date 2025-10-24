@@ -40,16 +40,37 @@ export const ProductCatalog = () => {
           
           <div className="flex items-center justify-center gap-4 mt-6">
             <NetworkBadge />
-            {!isConnected && (
-              <WalletConnectButton />
-            )}
           </div>
           
           {!isConnected && (
-            <div className="max-w-md mx-auto mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <p className="text-sm text-muted-foreground">
-                💡 Connect your wallet to Mezo Mainnet via <span className="text-primary font-semibold">Boar Network</span> to start shopping
-              </p>
+            <div className="max-w-2xl mx-auto mt-6 p-6 bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/30 rounded-xl shadow-glow animate-fade-in">
+              <div className="space-y-4">
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-foreground mb-2">Connect Your Wallet</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Connect to Mezo Mainnet via <span className="text-primary font-semibold">Boar Network</span> to start shopping
+                  </p>
+                </div>
+                
+                <div className="bg-background/50 backdrop-blur-sm p-4 rounded-lg border border-border/50">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full mt-2 animate-pulse" />
+                    <div className="flex-1 space-y-2">
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Boar Network RPC</p>
+                      <div className="font-mono text-xs text-primary break-all bg-primary/5 p-2 rounded border border-primary/20">
+                        81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Network: <span className="text-foreground font-semibold">Mezo Mainnet</span> (Chain ID: 31612)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-center pt-2">
+                  <WalletConnectButton />
+                </div>
+              </div>
             </div>
           )}
         </div>
