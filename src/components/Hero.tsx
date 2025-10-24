@@ -35,7 +35,7 @@ export const Hero = () => {
           {/* Hero Title with enhanced gradient */}
           <div className="space-y-4">
             <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-fade-in-up leading-tight tracking-tight">
-              Mezo Network
+              Mezo IQ
             </h1>
             <div className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent animate-shimmer" />
           </div>
