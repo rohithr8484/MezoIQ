@@ -73,27 +73,7 @@ export const RewardsDashboard = () => {
         <PythPriceDisplay />
       </div>
 
-      {rewardBalance.pending > 0 && (
-        <Card className="p-6 mt-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold mb-1">Ready to Claim</h3>
-              <p className="text-sm text-muted-foreground">
-                You have {rewardBalance.pending} MUSD available to claim
-              </p>
-            </div>
-            <Button 
-              variant="gradient" 
-              size="lg"
-              onClick={() => setShowClaimDialog(true)}
-            >
-              Claim Rewards
-            </Button>
-          </div>
-        </Card>
-      )}
-
-      <ClaimDialog 
+      <ClaimDialog
         open={showClaimDialog}
         onOpenChange={setShowClaimDialog}
         availableAmount={rewardBalance.pending}
