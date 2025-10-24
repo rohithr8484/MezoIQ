@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Loader2 } from 'lucide-react';
+import { ShoppingCart, Loader2, Wallet } from 'lucide-react';
 import type { Product } from '@/types/product';
 import { useProductPricing } from '@/hooks/useProductPricing';
+import { useAccount } from 'wagmi';
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +14,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, onCheckout }: ProductCardProps) => {
   const { pricing, isLoading } = useProductPricing(product.priceUSD);
+  const { isConnected } = useAccount();
 
   return (
     <Card className="group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 hover:shadow-glow transition-all duration-500 animate-fade-in-up">
@@ -65,13 +67,22 @@ export const ProductCard = ({ product, onCheckout }: ProductCardProps) => {
           </div>
         )}
 
+        {!isConnected && (
+          <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg text-center">
+            <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
+              <Wallet className="w-4 h-4" />
+              Connect wallet to purchase
+            </p>
+          </div>
+        )}
+        
         <Button
           onClick={() => onCheckout(product)}
           className="w-full gap-2 group/btn"
           disabled={isLoading}
         >
           <ShoppingCart className="w-4 h-4 group-hover/btn:animate-bounce" />
-          Buy Now
+          {isConnected ? 'Buy Now' : 'Connect & Buy'}
         </Button>
       </div>
     </Card>

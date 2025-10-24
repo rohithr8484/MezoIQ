@@ -71,7 +71,7 @@ export const CheckoutDialog = ({ product, open, onClose }: CheckoutDialogProps) 
         <DialogHeader>
           <DialogTitle className="text-2xl">Checkout</DialogTitle>
           <DialogDescription>
-            Complete your purchase with MUSD or BTC
+            Complete your purchase with MUSD or BTC via Boar Network
           </DialogDescription>
         </DialogHeader>
 
@@ -91,9 +91,17 @@ export const CheckoutDialog = ({ product, open, onClose }: CheckoutDialogProps) 
             {!isConnected ? (
               <div className="flex flex-col items-center gap-4 py-6 px-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                 <Wallet className="w-12 h-12 text-destructive" />
-                <p className="text-sm text-center text-muted-foreground">
-                  Please connect your wallet to continue with the purchase
-                </p>
+                <div className="text-center space-y-2">
+                  <p className="text-sm font-semibold text-foreground">
+                    Wallet Not Connected
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Connect your wallet to Mezo Mainnet via Boar Network to complete this purchase
+                  </p>
+                  <p className="text-xs text-primary font-mono mt-2">
+                    Network: Mezo Mainnet (Chain ID: 31612)
+                  </p>
+                </div>
               </div>
             ) : isLoading ? (
               <div className="flex items-center justify-center py-8">

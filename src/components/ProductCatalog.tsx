@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { ProductCard } from './ProductCard';
 import { CheckoutDialog } from './CheckoutDialog';
+import { NetworkBadge } from './NetworkBadge';
+import { WalletConnectButton } from './WalletConnectButton';
 import { products } from '@/data/products';
 import type { Product } from '@/types/product';
 import { ShoppingBag } from 'lucide-react';
+import { useAccount } from 'wagmi';
 
 export const ProductCatalog = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const { isConnected } = useAccount();
 
   const handleCheckout = (product: Product) => {
     setSelectedProduct(product);
@@ -33,6 +37,21 @@ export const ProductCatalog = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Shop with MUSD or BTC • Real-time oracle pricing • 2% cashback on every purchase
           </p>
+          
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <NetworkBadge />
+            {!isConnected && (
+              <WalletConnectButton />
+            )}
+          </div>
+          
+          {!isConnected && (
+            <div className="max-w-md mx-auto mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                💡 Connect your wallet to Mezo Mainnet via <span className="text-primary font-semibold">Boar Network</span> to start shopping
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
