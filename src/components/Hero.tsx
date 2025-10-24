@@ -1,45 +1,61 @@
 import { WalletConnectButton } from './WalletConnectButton';
 import { BoarWalletButton } from './BoarWalletButton';
 import { ValidationCloudService } from './ValidationCloudService';
-import { Coins, Zap, Trophy } from 'lucide-react';
+import { AnimatedBackground } from './AnimatedBackground';
+import { Coins, Zap, Trophy, Sparkles } from 'lucide-react';
 import mezoLogo from '@/assets/mezo-logo.png';
 import mezoIcon from '@/assets/mezo-icon.png';
 
 export const Hero = () => {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <AnimatedBackground />
+      
       {/* Animated background gradient with motion */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-secondary/5 animate-gradient bg-300%" style={{ backgroundSize: '200% 200%' }} />
       
-      {/* Enhanced floating glow effects */}
-      <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[120px] animate-float" />
-      <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-[120px] animate-float [animation-delay:2s] [animation-duration:4s]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-[150px] animate-pulse-glow [animation-delay:0.5s]" />
+      {/* Enhanced floating glow effects with more drama */}
+      <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/40 rounded-full blur-[140px] animate-float" style={{ boxShadow: '0 0 100px hsl(24 100% 50% / 0.4)' }} />
+      <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-secondary/40 rounded-full blur-[140px] animate-float [animation-delay:2s] [animation-duration:4s]" style={{ boxShadow: '0 0 100px hsl(221 83% 53% / 0.4)' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary/15 to-secondary/15 rounded-full blur-[150px] animate-pulse-glow [animation-delay:0.5s]" />
+      
+      {/* Sparkle particles */}
+      <div className="absolute top-20 left-20 text-primary/60 animate-pulse" style={{ animationDelay: '0s' }}>
+        <Sparkles className="w-4 h-4" />
+      </div>
+      <div className="absolute top-40 right-32 text-secondary/60 animate-pulse" style={{ animationDelay: '1s' }}>
+        <Sparkles className="w-3 h-3" />
+      </div>
+      <div className="absolute bottom-32 left-40 text-primary/60 animate-pulse" style={{ animationDelay: '2s' }}>
+        <Sparkles className="w-5 h-5" />
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Premium Logo with enhanced glow */}
+          {/* Premium Logo with spectacular glow */}
           <div className="flex justify-center mb-8 animate-fade-in-down">
             <div className="relative group animate-bounce-subtle">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-all duration-500 animate-pulse-glow" style={{ backgroundSize: '200% 200%' }} />
-              <div className="relative p-4 rounded-3xl bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-xl border-2 border-primary/30 hover:border-primary/50 transition-all duration-500 animate-float group-hover:scale-110">
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary via-secondary to-primary rounded-3xl blur-3xl opacity-60 group-hover:opacity-100 transition-all duration-500 animate-glow-pulse bg-300%" style={{ backgroundSize: '200% 200%' }} />
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-secondary to-primary rounded-3xl animate-border-flow opacity-50" />
+              <div className="relative p-4 rounded-3xl bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-xl border-2 border-primary/30 hover:border-primary/60 transition-all duration-500 animate-float group-hover:scale-110 group-hover:rotate-3">
                 <img 
                   src={mezoIcon} 
                   alt="Mezo Network" 
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-2xl"
+                  className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-[0_0_30px_rgba(255,117,24,0.8)]"
                 />
               </div>
             </div>
           </div>
 
-          {/* Hero Title with animated gradient */}
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in-up leading-tight">
-              <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient bg-300%" style={{ backgroundSize: '200% 200%' }}>
+          {/* Hero Title with spectacular animated gradient */}
+          <div className="space-y-4 relative">
+            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in-up leading-tight relative">
+              <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient bg-300% animate-text-glow" style={{ backgroundSize: '200% 200%' }}>
                 Mezo IQ
               </span>
+              <div className="absolute -inset-8 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30 blur-3xl animate-pulse-glow -z-10" />
             </h1>
-            <div className="h-1 w-24 mx-auto bg-gradient-to-r from-primary via-secondary to-primary animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
+            <div className="h-1.5 w-32 mx-auto bg-gradient-to-r from-primary via-secondary to-primary animate-shimmer rounded-full shadow-[0_0_20px_currentColor]" style={{ backgroundSize: '200% 100%' }} />
           </div>
 
           {/* Subtitle with shimmer effect */}

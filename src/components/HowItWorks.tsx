@@ -20,13 +20,20 @@ export const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-background to-accent/10">
-      <div className="container mx-auto max-w-7xl">
+    <section className="py-24 px-4 bg-gradient-to-b from-background to-accent/10 relative overflow-hidden">
+      {/* Floating gradient orbs */}
+      <div className="absolute top-10 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[100px] animate-float" />
+      <div className="absolute bottom-10 right-1/4 w-64 h-64 bg-secondary/10 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
+      
+      <div className="container mx-auto max-w-7xl relative z-10">
         <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            ⚙️ How It Works Mezo IQ
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+            <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient bg-300%" style={{ backgroundSize: '200% 200%' }}>
+              ⚙️ How It Works Mezo IQ
+            </span>
+            <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 blur-xl animate-pulse-glow -z-10" />
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             how it works
           </p>
         </div>

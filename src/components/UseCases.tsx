@@ -26,11 +26,17 @@ export const UseCases = () => {
   ];
 
   return (
-    <section className="py-24 px-4 bg-background">
-      <div className="container mx-auto max-w-7xl">
+    <section className="py-24 px-4 bg-background relative overflow-hidden">
+      {/* Rotating gradient background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 rounded-full blur-[120px] animate-rotate-glow opacity-30" />
+      
+      <div className="container mx-auto max-w-7xl relative z-10">
         <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            💡 Use Cases
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+            <span className="bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent animate-gradient bg-300%" style={{ backgroundSize: '200% 200%' }}>
+              💡 Use Cases
+            </span>
+            <div className="absolute -inset-2 bg-gradient-to-r from-secondary/20 via-primary/20 to-secondary/20 blur-xl animate-pulse-glow -z-10" />
           </h2>
         </div>
 
