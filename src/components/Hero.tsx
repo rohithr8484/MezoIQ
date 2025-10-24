@@ -1,7 +1,9 @@
 import { WalletConnectButton } from './WalletConnectButton';
 import { BoarWalletButton } from './BoarWalletButton';
-import { PythPriceDisplay } from './PythPriceDisplay';
+import { ValidationCloudService } from './ValidationCloudService';
 import { Coins, Zap, Trophy } from 'lucide-react';
+import mezoLogo from '@/assets/mezo-logo.png';
+import mezoIcon from '@/assets/mezo-icon.png';
 
 export const Hero = () => {
   return (
@@ -16,24 +18,34 @@ export const Hero = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Logo/Icon with enhanced animation */}
-          <div className="flex justify-center mb-6 animate-fade-in-down">
-            <div className="relative animate-float">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-xl opacity-50 animate-pulse-glow" />
-              <div className="relative bg-card/80 backdrop-blur-sm border-2 border-primary/30 rounded-full p-6 hover:border-primary/60 hover:scale-110 transition-all duration-300 shadow-[0_0_30px_rgba(255,117,24,0.3)]">
-                <Coins className="w-16 h-16 text-primary animate-bounce-subtle" />
+          {/* Premium Logo */}
+          <div className="flex justify-center mb-8 animate-fade-in-down">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 animate-pulse-glow" />
+              <div className="relative p-4 rounded-3xl bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-xl border-2 border-primary/30 hover:border-primary/50 transition-all duration-500 animate-float">
+                <img 
+                  src={mezoIcon} 
+                  alt="Mezo Network" 
+                  className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-2xl"
+                />
               </div>
             </div>
           </div>
 
-          {/* Main heading with enhanced gradient */}
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient bg-300% [text-shadow:0_0_30px_rgba(255,117,24,0.3)] animate-scale-in">
-            Mezo IQ
-          </h1>
+          {/* Hero Title with enhanced gradient */}
+          <div className="space-y-4">
+            <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-fade-in-up leading-tight tracking-tight">
+              Mezo Network
+            </h1>
+            <div className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent animate-shimmer" />
+          </div>
 
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up [animation-delay:0.2s] opacity-0 [animation-fill-mode:forwards]">
-            Earn Bitcoin rewards through gaming, social activities, and daily challenges. 
-            Connect your wallet and start earning today.
+          {/* Enhanced Subtitle */}
+          <p className="text-xl md:text-3xl text-foreground/90 max-w-3xl mx-auto animate-fade-in-up font-light leading-relaxed" style={{ animationDelay: '0.2s' }}>
+            Earn rewards, complete challenges, and climb the leaderboard on the{' '}
+            <span className="font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Bitcoin-powered blockchain
+            </span>
           </p>
 
           {/* Features with staggered animations */}
@@ -63,30 +75,34 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Pyth Network Live Price with animation */}
-          <div className="max-w-md mx-auto py-4 animate-scale-in [animation-delay:0.6s] opacity-0 [animation-fill-mode:forwards]">
-            <PythPriceDisplay />
+          {/* Premium CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up pt-6" style={{ animationDelay: '0.4s' }}>
+            <WalletConnectButton />
+            <BoarWalletButton />
           </div>
 
-          {/* Wallet connection buttons with shimmer effect */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-in [animation-delay:0.7s] opacity-0 [animation-fill-mode:forwards]">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-300" />
-              <div className="relative">
-                <WalletConnectButton />
-              </div>
-            </div>
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-secondary to-primary rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-300" />
-              <div className="relative">
-                <BoarWalletButton />
-              </div>
-            </div>
+          {/* Enhanced Feature badges */}
+          <div className="flex flex-wrap justify-center gap-3 pt-12 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            {[
+              { label: '₿ Bitcoin-Powered', color: 'primary' },
+              { label: '🔒 Secure', color: 'secondary' },
+              { label: '💎 Rewarding', color: 'accent' },
+              { label: '🌐 Community-Driven', color: 'primary' }
+            ].map(({ label, color }, index) => (
+              <span
+                key={label}
+                className={`px-6 py-3 rounded-full bg-gradient-to-r from-card/80 to-card/60 backdrop-blur-xl border-2 border-${color}/30 text-sm font-medium text-foreground/90 hover:border-${color}/60 hover:shadow-glow transition-all duration-500 hover:scale-110 cursor-default`}
+                style={{ animationDelay: `${0.6 + index * 0.1}s` }}
+              >
+                {label}
+              </span>
+            ))}
           </div>
+        </div>
 
-          <p className="text-sm text-muted-foreground pt-4 animate-fade-in [animation-delay:0.8s] opacity-0 [animation-fill-mode:forwards]">
-            Connect your wallet to start earning Bitcoin rewards
-          </p>
+        {/* Validation Cloud Integration */}
+        <div className="max-w-4xl mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+          <ValidationCloudService />
         </div>
       </div>
     </div>

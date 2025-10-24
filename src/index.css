@@ -17,18 +17,18 @@ All colors MUST be HSL.
     --popover: 240 8% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 25 95% 53%;
+    --primary: 28 100% 53%;
     --primary-foreground: 240 10% 8%;
-    --primary-glow: 25 100% 65%;
+    --primary-glow: 28 100% 65%;
 
-    --secondary: 270 70% 60%;
+    --secondary: 262 83% 58%;
     --secondary-foreground: 0 0% 98%;
-    --secondary-glow: 270 80% 70%;
+    --secondary-glow: 262 88% 68%;
 
     --muted: 240 6% 20%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 270 70% 60%;
+    --accent: 280 100% 70%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -36,27 +36,34 @@ All colors MUST be HSL.
 
     --border: 240 6% 20%;
     --input: 240 6% 20%;
-    --ring: 25 95% 53%;
+    --ring: 28 100% 53%;
 
     --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(25 95% 53%), hsl(270 70% 60%));
-    --gradient-glow: linear-gradient(135deg, hsl(25 100% 65% / 0.2), hsl(270 80% 70% / 0.2));
+    /* Bitcoin orange to purple gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(28 100% 53%) 0%, hsl(262 83% 58%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(280 100% 70%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(28 100% 53% / 0.1) 0%, hsl(262 83% 58% / 0.1) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(28 100% 53% / 0.2) 0%, hsl(262 83% 58% / 0.2) 50%, hsl(280 100% 70% / 0.2) 100%);
     
-    /* Shadows and effects */
-    --shadow-glow: 0 0 40px hsl(25 95% 53% / 0.3);
-    --shadow-glow-secondary: 0 0 40px hsl(270 70% 60% / 0.3);
+    /* Bitcoin orange glow shadows */
+    --shadow-glow: 0 0 60px hsl(28 100% 53% / 0.4), 0 0 100px hsl(262 83% 58% / 0.2);
+    --shadow-elegant: 0 20px 60px -15px hsl(28 100% 53% / 0.5);
+    --shadow-card: 0 10px 40px -10px hsl(262 83% 58% / 0.3);
+    --shadow-glow-secondary: 0 0 40px hsl(262 83% 58% / 0.3);
+    
+    /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 240 10% 8%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary: 28 100% 53%;
     --sidebar-primary-foreground: 240 10% 8%;
     --sidebar-accent: 240 8% 12%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 6% 20%;
-    --sidebar-ring: 25 95% 53%;
+    --sidebar-ring: 28 100% 53%;
   }
 
   .dark {
@@ -69,16 +76,16 @@ All colors MUST be HSL.
     --popover: 240 8% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 25 95% 53%;
+    --primary: 28 100% 53%;
     --primary-foreground: 240 10% 8%;
 
-    --secondary: 270 70% 60%;
+    --secondary: 262 83% 58%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 6% 20%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 270 70% 60%;
+    --accent: 280 100% 70%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -86,16 +93,16 @@ All colors MUST be HSL.
 
     --border: 240 6% 20%;
     --input: 240 6% 20%;
-    --ring: 25 95% 53%;
+    --ring: 28 100% 53%;
     
     --sidebar-background: 240 10% 8%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary: 28 100% 53%;
     --sidebar-primary-foreground: 240 10% 8%;
     --sidebar-accent: 240 8% 12%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 6% 20%;
-    --sidebar-ring: 25 95% 53%;
+    --sidebar-ring: 28 100% 53%;
   }
 }
 

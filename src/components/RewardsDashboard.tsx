@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useMezoContracts } from '@/hooks/useMezoContracts';
-import { Coins, TrendingUp, Clock, CheckCircle } from 'lucide-react';
+import { Bitcoin, TrendingUp, Clock, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { ClaimDialog } from './ClaimDialog';
 import { useChallenges } from '@/hooks/useChallenges';
@@ -24,7 +24,7 @@ export const RewardsDashboard = () => {
     {
       label: 'Total Points',
       value: rewardBalance.points,
-      icon: Coins,
+      icon: Bitcoin,
       color: 'text-primary',
     },
     {
