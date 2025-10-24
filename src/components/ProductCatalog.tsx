@@ -6,12 +6,12 @@ import { WalletConnectButton } from './WalletConnectButton';
 import { products } from '@/data/products';
 import type { Product } from '@/types/product';
 import { ShoppingBag } from 'lucide-react';
-import { useAccount } from 'wagmi';
+import { useMezoWallet } from '@/hooks/useMezoWallet';
 
 export const ProductCatalog = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const { isConnected } = useAccount();
+  const { isConnected } = useMezoWallet();
 
   const handleCheckout = (product: Product) => {
     setSelectedProduct(product);

@@ -1,12 +1,10 @@
 import { Badge } from '@/components/ui/badge';
-import { Network, CheckCircle2, AlertCircle } from 'lucide-react';
-import { useAccount, useChainId } from 'wagmi';
-import { mezoMainnet } from '@/config/wagmi';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { useMezoWallet } from '@/hooks/useMezoWallet';
 
 export const NetworkBadge = () => {
-  const { isConnected } = useAccount();
-  const chainId = useChainId();
-  const isCorrectNetwork = chainId === mezoMainnet.id;
+  const { isConnected, chainId } = useMezoWallet();
+  const isCorrectNetwork = isConnected;
 
   if (!isConnected) {
     return (

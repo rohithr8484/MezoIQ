@@ -13,7 +13,7 @@ import { Loader2, CheckCircle2, Wallet } from 'lucide-react';
 import type { Product } from '@/types/product';
 import { useProductPricing } from '@/hooks/useProductPricing';
 import { usePurchases } from '@/hooks/usePurchases';
-import { useAccount } from 'wagmi';
+import { useMezoWallet } from '@/hooks/useMezoWallet';
 import { toast } from 'sonner';
 
 interface CheckoutDialogProps {
@@ -28,7 +28,7 @@ export const CheckoutDialog = ({ product, open, onClose }: CheckoutDialogProps) 
   const [purchaseComplete, setPurchaseComplete] = useState(false);
   const { pricing, isLoading } = useProductPricing(product?.priceUSD || 0);
   const { addPurchase } = usePurchases();
-  const { isConnected } = useAccount();
+  const { isConnected } = useMezoWallet();
 
   const handlePurchase = async () => {
     if (!product || !isConnected) {

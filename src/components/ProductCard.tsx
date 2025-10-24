@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, Loader2, Wallet } from 'lucide-react';
 import type { Product } from '@/types/product';
 import { useProductPricing } from '@/hooks/useProductPricing';
-import { useAccount } from 'wagmi';
+import { useMezoWallet } from '@/hooks/useMezoWallet';
 
 interface ProductCardProps {
   product: Product;
@@ -14,7 +13,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, onCheckout }: ProductCardProps) => {
   const { pricing, isLoading } = useProductPricing(product.priceUSD);
-  const { isConnected } = useAccount();
+  const { isConnected } = useMezoWallet();
 
   return (
     <Card className="group overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 hover:shadow-glow transition-all duration-500 animate-fade-in-up">
