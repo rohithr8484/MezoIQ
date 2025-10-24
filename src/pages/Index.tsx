@@ -2,6 +2,8 @@ import { Hero } from '@/components/Hero';
 import { HowItWorks } from '@/components/HowItWorks';
 import { UseCases } from '@/components/UseCases';
 import { RewardsHub } from '@/components/RewardsHub';
+import { ProductCatalog } from '@/components/ProductCatalog';
+import { PurchasesDashboard } from '@/components/PurchasesDashboard';
 
 const Index = () => {
   return (
@@ -20,6 +22,8 @@ const Index = () => {
         <Hero />
         <HowItWorks />
         <UseCases />
+        <ProductCatalog />
+        <PurchasesDashboard />
         <div className="relative">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <RewardsHub />
