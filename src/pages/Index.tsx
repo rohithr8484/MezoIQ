@@ -4,7 +4,6 @@ import { UseCases } from '@/components/UseCases';
 import { RewardsHub } from '@/components/RewardsHub';
 import { ProductCatalog } from '@/components/ProductCatalog';
 import { PurchasesDashboard } from '@/components/PurchasesDashboard';
-import { PassportDashboard } from '@/components/PassportDashboard';
 
 const Index = () => {
   return (
@@ -21,9 +20,6 @@ const Index = () => {
       
       <div className="relative z-10">
         <Hero />
-        <div className="container mx-auto px-4 py-16">
-          <PassportDashboard />
-        </div>
         <HowItWorks />
         <UseCases />
         <ProductCatalog />

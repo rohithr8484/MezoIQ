@@ -1,4 +1,6 @@
-import { getConfig } from '@mezo-org/passport';
+import { createConfig, http, webSocket } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
+import { coinbaseWallet, walletConnect } from 'wagmi/connectors';
 import { defineChain } from 'viem';
 
 // Define Mezo Mainnet chain
@@ -26,9 +28,18 @@ export const mezoMainnet = defineChain({
   },
 });
 
-// Mezo Passport configuration with Bitcoin wallet support
-// By default supports Unisat, OKX, and Xverse wallets
-export const config = getConfig({
-  appName: 'Mezo IQ',
-  chains: [mezoMainnet],
+export const config = createConfig({
+  chains: [mezoMainnet, mainnet],
+  connectors: [
+    walletConnect({
+      projectId: '696956c426d467cb2aed00d4b0a543b2',
+    }),
+    coinbaseWallet({
+      appName: 'Mezo IQ',
+    }),
+  ],
+  transports: {
+    [mezoMainnet.id]: http('https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c'),
+    [mainnet.id]: http(),
+  },
 });
