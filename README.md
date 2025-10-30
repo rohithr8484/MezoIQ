@@ -144,7 +144,7 @@ Provides real-time price feeds for crypto assets.
 
 ---
 
-## 💰 Token Contracts (Mezo Mainnet)
+## 💰 Bridge Token Contracts (Mezo Mainnet)
 
 | Token | Address | Description | Decimals |
 |--------|----------|--------------|-----------|
@@ -164,15 +164,13 @@ Provides real-time price feeds for crypto assets.
 Through RainbowKit wallet connection
 
 
-
-
-**Installation:**
+## Installation
 
 ```bash
 npm install @mezo-org/passport @rainbow-me/rainbowkit wagmi viem@2.x @tanstack/react-query
 
 
-## Folder structure
+## Folder Structure
 <img width="438" height="897" alt="image" src="https://github.com/user-attachments/assets/da3e3cc8-dd08-4abb-8b39-db63e59b4c41" />
 
 
