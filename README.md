@@ -97,6 +97,11 @@ npm run lint
 npm run type-check
 ```
 
+## Folder Structure
+<img width="438" height="897" alt="image" src="https://github.com/user-attachments/assets/da3e3cc8-dd08-4abb-8b39-db63e59b4c41" />
+
+
+
 # ⚡ Mezo Mainnet Configuration and Contracts
 
 ## 🧠 Pyth Network Oracle
@@ -164,17 +169,6 @@ Provides real-time price feeds for crypto assets.
 Through RainbowKit wallet connection
 
 
-## Installation
-
-```bash
-npm install @mezo-org/passport @rainbow-me/rainbowkit wagmi viem@2.x @tanstack/react-query
-
-
-## Folder Structure
-<img width="438" height="897" alt="image" src="https://github.com/user-attachments/assets/da3e3cc8-dd08-4abb-8b39-db63e59b4c41" />
-
-
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to submit pull requests or open issues to improve the project.
@@ -188,3 +182,7 @@ This project is private. Please contact the maintainer for access.
 **Bitcoin Everywhere** - Making Bitcoin accessible in every digital experience 🚀
 
 *Built with modern web technologies and Bitcoin-first principles*
+
+
+
+
