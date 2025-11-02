@@ -56,6 +56,27 @@ Built with React, Vite, and TypeScript for smooth development and deployment.
 - **React Router DOM** - Client-side routing
 - **React Hook Form** - Form handling with resolvers
 
+## Mezo Testnet and Mainet Contracts
+
+Mezo Network Configuration
+Chain ID: 31612
+Network: Mezo Mainnet
+Native Currency: BTC (Bitcoin, 18 decimals)
+RPC Endpoint: https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
+WebSocket: wss://rpc-ws.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
+Explorer: https://explorer.mezo.org
+
+Pyth Oracle Contracts (Price Feeds)
+Contract Addresses:
+
+Mainnet: 0x2880aB155794e7179c9eE2e38200202908C17B43
+Testnet: 0x2880aB155794e7179c9eE2e38200202908C17B43
+Price Feed IDs:
+
+BTC/USD: 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43
+MUSD/USD: 0x0617a9b725011a126a2b9fd53563f4236501f32cf76d877644b943394606c6de
+Type: Oracle price feed contracts for real-time token pricing
+
 ## 🚀 Quick Start
 
 ### Installation
