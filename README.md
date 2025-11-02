@@ -62,6 +62,8 @@ Mezo Network Configuration
 Chain ID: 31612
 Network: Mezo Mainnet
 Native Currency: BTC (Bitcoin, 18 decimals)
+
+
 RPC Endpoint: https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 WebSocket: wss://rpc-ws.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 Explorer: https://explorer.mezo.org
