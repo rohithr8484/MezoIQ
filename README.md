@@ -66,9 +66,13 @@ Network: Mezo Mainnet
 
 Native Currency: BTC (Bitcoin, 18 decimals)
 
-RPC Endpoint:                https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
+RPC Endpoint:             
 
-WebSocket:                     wss://rpc-ws.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
+https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
+
+WebSocket:     
+
+wss://rpc-ws.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 
 Explorer: https://explorer.mezo.org
 
@@ -93,7 +97,7 @@ Type: Oracle price feed contracts for real-time token pricing
 
 ```bash
 # Clone the repository
-git clone https://github.com/rohithr8484/bitcoin-everywhere.git
+git clone https://github.com/rohithr8484/MezoIQ.git
 cd bitcoin-everywhere
 
 # Install dependencies
