@@ -98,7 +98,7 @@ Type: Oracle price feed contracts for real-time token pricing
 ```bash
 # Clone the repository
 git clone https://github.com/rohithr8484/MezoIQ.git
-cd bitcoin-everywhere
+cd MezoIQ
 
 # Install dependencies
 npm install
