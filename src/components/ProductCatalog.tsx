@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { ProductCard } from './ProductCard';
 import { CheckoutDialog } from './CheckoutDialog';
-import { NetworkBadge } from './NetworkBadge';
 import { WalletConnectButton } from './WalletConnectButton';
 import { products } from '@/data/products';
 import type { Product } from '@/types/product';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Wallet } from 'lucide-react';
 import { useMezoWallet } from '@/hooks/useMezoWallet';
 
 export const ProductCatalog = () => {
@@ -19,46 +18,43 @@ export const ProductCatalog = () => {
   };
 
   return (
-    <section className="relative py-20 px-4 overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
-      <div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+    <section className="relative py-24 px-4 overflow-hidden bg-background">
+      {/* Subtle background */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="absolute top-20 left-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="text-center mb-16 space-y-4 animate-fade-in-up">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-primary/10 border border-primary/20 rounded-full mb-4">
-            <ShoppingBag className="w-5 h-5 text-primary animate-bounce" />
-            <span className="text-sm font-semibold text-primary">Shop with Crypto</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium animate-fade-in">
+            <ShoppingBag className="w-4 h-4 inline mr-2" />
+            Marketplace
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground animate-fade-in-up">
             Product Catalog
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Shop with MUSD or BTC • Real-time oracle pricing • 2% cashback on every purchase
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            Pay with MUSD or BTC • Real-time pricing • 2% cashback rewards
           </p>
           
           {!isConnected && (
-            <div className="max-w-2xl mx-auto mt-6 p-6 bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/30 rounded-xl shadow-glow animate-fade-in">
+            <div className="max-w-xl mx-auto mt-8 p-6 glass-card rounded-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <div className="space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto">
+                  <Wallet className="w-6 h-6 text-primary" />
+                </div>
                 <div className="text-center">
-                  <h3 className="text-lg font-bold text-foreground mb-2">Connect Your Wallet</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Connect to Mezo Mainnet via <span className="text-primary font-semibold">Boar Network</span> to start shopping
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Connect Your Wallet</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Connect to Mezo Mainnet to start shopping
                   </p>
                 </div>
                 
-                <div className="bg-background/50 backdrop-blur-sm p-4 rounded-lg border border-border/50">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full mt-2 animate-pulse" />
-                    <div className="flex-1 space-y-2">
-                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Boar Network RPC</p>
-                      <div className="font-mono text-xs text-primary break-all bg-primary/5 p-2 rounded border border-primary/20">
-                        81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Network: <span className="text-foreground font-semibold">Mezo Mainnet</span> (Chain ID: 31612)
-                      </p>
+                <div className="bg-card/50 p-4 rounded-xl border border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-muted-foreground">Network</p>
+                      <p className="text-sm font-semibold text-foreground">Mezo Mainnet (Chain ID: 31612)</p>
                     </div>
                   </div>
                 </div>
@@ -71,10 +67,11 @@ export const ProductCatalog = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, index) => (
             <div
               key={product.id}
+              className="animate-fade-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <ProductCard

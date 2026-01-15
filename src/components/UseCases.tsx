@@ -1,69 +1,78 @@
-import { Gamepad2, MessageSquare, ShoppingBag } from 'lucide-react';
+import { Gamepad2, MessageSquare, ShoppingBag, TrendingUp } from 'lucide-react';
 
 export const UseCases = () => {
   const useCases = [
     {
       icon: Gamepad2,
-      emoji: '🎮',
-      title: 'Gaming',
+      title: 'Gaming & Entertainment',
       description:
-        'Players earn Bitcoin for completing missions, winning tournaments, or contributing to community events. Developers monetize via microtransactions or in-game Bitcoin economies.',
+        'Reward players with Bitcoin for completing missions, winning tournaments, or contributing to community events. Build sustainable in-game economies.',
+      stats: '40% higher retention',
     },
     {
       icon: MessageSquare,
-      emoji: '💬',
       title: 'Social Platforms',
       description:
-        'Reward content creators and community members with Bitcoin tips. Introduce engagement-based incentives — e.g., users earn Bitcoin for meaningful contributions or verified posts.',
+        'Incentivize creators and community members with Bitcoin rewards. Drive engagement through verified contributions and quality content.',
+      stats: '3x engagement boost',
     },
     {
       icon: ShoppingBag,
-      emoji: '🛍️',
-      title: 'E-Commerce',
+      title: 'E-Commerce & Retail',
       description:
-        'Enable instant Bitcoin-based rewards or discounts for loyal customers. Gamify shopping experiences with challenges and achievement rewards.',
+        'Deploy Bitcoin-based loyalty programs with instant rewards. Gamify shopping experiences with achievement-based incentives.',
+      stats: '25% repeat purchases',
     },
   ];
 
   return (
-    <section className="py-24 px-4 bg-background relative overflow-hidden">
-      {/* Rotating gradient background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 rounded-full blur-[120px] animate-rotate-glow opacity-30" />
+    <section className="py-24 px-4 bg-card/30 relative overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="absolute bottom-20 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[150px]" />
       
-      <div className="container mx-auto max-w-7xl relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
-            <span className="bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent animate-gradient bg-300%" style={{ backgroundSize: '200% 200%' }}>
-              💡 Use Cases
-            </span>
-            <div className="absolute -inset-2 bg-gradient-to-r from-secondary/20 via-primary/20 to-secondary/20 blur-xl animate-pulse-glow -z-10" />
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="text-center mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 animate-fade-in">
+            Use Cases
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 animate-fade-in-up text-foreground">
+            Industry Solutions
           </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            Trusted by leading platforms across multiple industries
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {useCases.map((useCase, index) => (
             <div
               key={useCase.title}
-              className="bg-card rounded-xl p-8 border border-border hover:border-secondary/50 hover:shadow-[0_0_30px_rgba(56,139,253,0.3)] transition-all duration-500 animate-scale-in group transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden"
+              className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 group card-hover animate-fade-in-up relative overflow-hidden"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Hover gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
-              <div className="space-y-4 relative z-10">
-                <div className="flex items-center gap-3">
-                  <span className="text-4xl transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 inline-block">{useCase.emoji}</span>
-                  <h3 className="font-semibold text-foreground text-xl group-hover:text-secondary transition-colors duration-300">
-                    {useCase.title}
-                  </h3>
+              <div className="space-y-5 relative z-10">
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
+                  <useCase.icon className="w-7 h-7 text-primary" />
                 </div>
-                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-300">
+                
+                <h3 className="font-semibold text-xl text-foreground group-hover:text-primary transition-colors duration-300">
+                  {useCase.title}
+                </h3>
+                
+                <p className="text-muted-foreground leading-relaxed">
                   {useCase.description}
                 </p>
+                
+                {/* Stats badge */}
+                <div className="flex items-center gap-2 pt-2">
+                  <TrendingUp className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-medium text-accent">{useCase.stats}</span>
+                </div>
               </div>
-              
-              {/* Shine effect on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </div>
           ))}
         </div>
