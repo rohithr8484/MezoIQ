@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Wallet, LogOut } from 'lucide-react';
+import { Wallet, LogOut, Check } from 'lucide-react';
 import { useMezoWallet } from '@/hooks/useMezoWallet';
 
 export const WalletConnectButton = () => {
@@ -8,27 +8,27 @@ export const WalletConnectButton = () => {
   if (isConnected && address) {
     return (
       <Button
-        variant="wallet"
+        variant="outline"
         size="lg"
         onClick={disconnect}
-        className="gap-3"
+        className="gap-3 border-primary/30 hover:border-primary"
       >
-        <Wallet className="w-5 h-5" />
-        {address.slice(0, 6)}...{address.slice(-4)}
-        <LogOut className="w-4 h-4" />
+        <Check className="w-4 h-4 text-accent" />
+        <span className="text-foreground">{address.slice(0, 6)}...{address.slice(-4)}</span>
+        <LogOut className="w-4 h-4 text-muted-foreground" />
       </Button>
     );
   }
 
   return (
     <Button
-      variant="wallet"
+      variant="default"
       size="lg"
       onClick={connect}
       className="gap-3"
     >
       <Wallet className="w-5 h-5" />
-      Connect to Mezo
+      Connect Wallet
     </Button>
   );
 };
