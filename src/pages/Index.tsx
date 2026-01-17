@@ -4,6 +4,7 @@ import { UseCases } from '@/components/UseCases';
 import { RewardsHub } from '@/components/RewardsHub';
 import { ProductCatalog } from '@/components/ProductCatalog';
 import { PurchasesDashboard } from '@/components/PurchasesDashboard';
+import { FAQSection } from '@/components/FAQSection';
 
 const Index = () => {
   return (
@@ -21,6 +22,7 @@ const Index = () => {
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
           <RewardsHub />
         </div>
+        <FAQSection />
       </div>
     </div>
   );
