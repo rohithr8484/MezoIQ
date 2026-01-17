@@ -26,51 +26,51 @@ export const UseCases = () => {
   ];
 
   return (
-    <section className="py-24 px-4 bg-card/30 relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 bg-card/30 relative overflow-hidden">
       {/* Background accents */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      <div className="absolute bottom-20 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[150px]" />
+      <div className="absolute bottom-20 right-1/4 w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-accent/5 rounded-full blur-[100px] md:blur-[150px]" />
       
       <div className="container mx-auto max-w-6xl relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 animate-fade-in">
             Use Cases
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 animate-fade-in-up text-foreground">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 animate-fade-in-up text-foreground">
             Industry Solutions
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto animate-fade-in-up px-4" style={{ animationDelay: '0.1s' }}>
             Trusted by leading platforms across multiple industries
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {useCases.map((useCase, index) => (
             <div
               key={useCase.title}
-              className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 group card-hover animate-fade-in-up relative overflow-hidden"
+              className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-xl md:rounded-2xl p-6 md:p-8 group card-hover animate-fade-in-up relative overflow-hidden"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               {/* Hover gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
-              <div className="space-y-5 relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
-                  <useCase.icon className="w-7 h-7 text-primary" />
+              <div className="space-y-4 md:space-y-5 relative z-10">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
+                  <useCase.icon className="w-6 h-6 md:w-7 md:h-7 text-primary" />
                 </div>
                 
-                <h3 className="font-semibold text-xl text-foreground group-hover:text-primary transition-colors duration-300">
+                <h3 className="font-semibold text-lg md:text-xl text-foreground group-hover:text-primary transition-colors duration-300">
                   {useCase.title}
                 </h3>
                 
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                   {useCase.description}
                 </p>
                 
                 {/* Stats badge */}
-                <div className="flex items-center gap-2 pt-2">
+                <div className="flex items-center gap-2 pt-1 md:pt-2">
                   <TrendingUp className="w-4 h-4 text-accent" />
-                  <span className="text-sm font-medium text-accent">{useCase.stats}</span>
+                  <span className="text-xs md:text-sm font-medium text-accent">{useCase.stats}</span>
                 </div>
               </div>
             </div>
