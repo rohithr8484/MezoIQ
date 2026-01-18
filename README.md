@@ -56,6 +56,11 @@ Built with React, Vite, and TypeScript for smooth development and deployment.
 - **React Router DOM** - Client-side routing
 - **React Hook Form** - Form handling with resolvers
 
+## Technical Architecture
+
+<img width="1024" height="1536" alt="ChatGPT Image Jan 18, 2026, 05_30_28 PM" src="https://github.com/user-attachments/assets/8346d60c-5a66-4279-b3ee-6542976f4f27" />
+
+
 ## Mezo Testnet and Mainet Contracts
 
 Mezo Network Configuration
@@ -66,13 +71,17 @@ Network: Mezo Mainnet
 
 Native Currency: BTC (Bitcoin, 18 decimals)
 
+
+
 RPC Endpoint:             
 
 https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 
 
 
-Explorer: https://explorer.mezo.org
+Explorer: 
+
+https://explorer.mezo.org
 
 
 
