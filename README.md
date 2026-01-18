@@ -65,41 +65,40 @@ Built with React, Vite, and TypeScript for smooth development and deployment.
 
 Mezo Network Configuration
 
-Chain ID: 31612
+**Chain ID:** 31612
 
-Network: Mezo Mainnet
+**Network:** Mezo Testnet & Mainnet
 
-Native Currency: BTC (Bitcoin, 18 decimals)
+**Native Currency:** BTC (Bitcoin, 18 decimals)
 
 
 
-RPC Endpoint:             
+**RPC Endpoint:**            
 
 https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 
 
 
-Explorer: 
+**Explorer:**
 
 https://explorer.mezo.org
 
 
+**Pyth Oracle Contracts (Price Feeds)**
 
-
-Pyth Oracle Contracts (Price Feeds)
-
-Contract Addresses:
+**Contract Addresses:**
 
 **Mainnet:** 0x2880aB155794e7179c9eE2e38200202908C17B43
 **Testnet:** 0x2880aB155794e7179c9eE2e38200202908C17B43
 
-Price Feed IDs:
+**Price Feed IDs:**
+
+Type: Oracle price feed contracts for real-time token pricing
 
 **BTC/USD:** 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43
 
 **MUSD/USD:** 0x0617a9b725011a126a2b9fd53563f4236501f32cf76d877644b943394606c6de
 
-Type: Oracle price feed contracts for real-time token pricing
 
 ## 🚀 Quick Start
 
