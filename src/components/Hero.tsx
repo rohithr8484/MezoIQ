@@ -4,8 +4,13 @@ import { ValidationCloudService } from './ValidationCloudService';
 import { AnimatedBackground } from './AnimatedBackground';
 import { Coins, Zap, Trophy, Shield, Lock, Globe } from 'lucide-react';
 import mezoIcon from '@/assets/mezo-icon.png';
+import { Button } from '@/components/ui/button';
 
-export const Hero = () => {
+interface HeroProps {
+  onEnterApp?: () => void;
+}
+
+export const Hero = ({ onEnterApp }: HeroProps) => {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden py-12 md:py-0">
       <AnimatedBackground />
@@ -87,6 +92,15 @@ export const Hero = () => {
 
           {/* CTA Buttons - Professional styling */}
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center animate-fade-in-up pt-2 md:pt-4 px-4" style={{ animationDelay: '0.6s' }}>
+            {onEnterApp && (
+              <Button
+                onClick={onEnterApp}
+                size="lg"
+                className="w-full sm:w-auto px-8 py-6 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all duration-300"
+              >
+                Enter App
+              </Button>
+            )}
             <div className="w-full sm:w-auto transform hover:scale-105 transition-transform duration-300">
               <WalletConnectButton />
             </div>
