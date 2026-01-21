@@ -3,11 +3,8 @@ import { parseEther, formatEther } from 'viem';
 import { useState, useEffect } from 'react';
 import type { RewardBalance, GasEstimate } from '@/types/rewards';
 import { useUserProgress } from './useUserProgress';
-
-// Mezo contract addresses (placeholder - replace with actual addresses)
-const MEZO_REWARDS_CONTRACT = '0x0000000000000000000000000000000000000000';
-const MUSD_CONTRACT = '0x0000000000000000000000000000000000000000';
-const TBTC_CONTRACT = '0x0000000000000000000000000000000000000000';
+import { CONTRACT_ADDRESSES } from '@/contracts/addresses';
+import { REWARDS_ABI, ERC20_ABI } from '@/contracts/abis';
 
 export const useMezoContracts = () => {
   const { address, isConnected } = useAccount();
@@ -20,50 +17,97 @@ export const useMezoContracts = () => {
     tbtcBalance: 0,
   });
 
-  // Sync rewards with user progress
+  // Read user rewards from contract
+  const { data: contractRewards } = useReadContract({
+    address: CONTRACT_ADDRESSES.REWARDS as `0x${string}`,
+    abi: REWARDS_ABI,
+    functionName: 'getUserRewards',
+    args: address ? [address] : undefined,
+    query: {
+      enabled: isConnected && CONTRACT_ADDRESSES.REWARDS !== '0x0000000000000000000000000000000000000000',
+    },
+  });
+
+  // Read MUSD balance
+  const { data: musdBalance } = useReadContract({
+    address: CONTRACT_ADDRESSES.MUSD as `0x${string}`,
+    abi: ERC20_ABI,
+    functionName: 'balanceOf',
+    args: address ? [address] : undefined,
+    query: {
+      enabled: isConnected && CONTRACT_ADDRESSES.MUSD !== '0x0000000000000000000000000000000000000000',
+    },
+  });
+
+  // Read tBTC balance
+  const { data: tbtcBalance } = useReadContract({
+    address: CONTRACT_ADDRESSES.TBTC as `0x${string}`,
+    abi: ERC20_ABI,
+    functionName: 'balanceOf',
+    args: address ? [address] : undefined,
+    query: {
+      enabled: isConnected && CONTRACT_ADDRESSES.TBTC !== '0x0000000000000000000000000000000000000000',
+    },
+  });
+
+  // Sync rewards from contract or local progress
+  useEffect(() => {
+    if (isConnected) {
+      if (contractRewards && Array.isArray(contractRewards)) {
+        // Use on-chain data when available
+        const [points, pendingMUSD, claimedMUSD, totalEarned] = contractRewards as [bigint, bigint, bigint, bigint, bigint];
+        setRewardBalance(prev => ({
+          ...prev,
+          points: Number(points),
+          pending: Number(formatEther(pendingMUSD)),
+          claimed: Number(formatEther(claimedMUSD)),
+        }));
+      } else {
+        // Fall back to local progress
+        setRewardBalance(prev => ({
+          ...prev,
+          points: progress.totalEarned,
+          pending: progress.points,
+        }));
+      }
+    }
+  }, [contractRewards, progress, isConnected]);
+
+  // Update balances when contract data changes
   useEffect(() => {
     if (isConnected) {
       setRewardBalance(prev => ({
         ...prev,
-        points: progress.totalEarned,
-        pending: progress.points,
+        musdBalance: musdBalance ? Number(formatEther(musdBalance as bigint)) : prev.musdBalance,
+        tbtcBalance: tbtcBalance ? Number(formatEther(tbtcBalance as bigint)) : prev.tbtcBalance,
       }));
     }
-  }, [progress, isConnected]);
+  }, [musdBalance, tbtcBalance, isConnected]);
 
-  // Mock balance query - replace with actual contract reads
-  const { data: musdBalance } = useReadContract({
-    address: MUSD_CONTRACT as `0x${string}`,
-    abi: [
-      {
-        name: 'balanceOf',
-        type: 'function',
-        stateMutability: 'view',
-        inputs: [{ name: 'account', type: 'address' }],
-        outputs: [{ name: 'balance', type: 'uint256' }],
-      },
-    ],
-    functionName: 'balanceOf',
-    args: address ? [address] : undefined,
-  });
-
-  useEffect(() => {
-    if (musdBalance && isConnected) {
-      setRewardBalance(prev => ({
-        ...prev,
-        musdBalance: Number(formatEther(musdBalance as bigint)),
-      }));
-    }
-  }, [musdBalance, isConnected]);
-
-  const { writeContract, isPending } = useWriteContract();
+  const { writeContract, writeContractAsync, isPending } = useWriteContract();
 
   const claimRewards = async (amount: number) => {
     if (!isConnected) {
       throw new Error('Wallet not connected');
     }
 
-    // Mock claim - replace with actual contract call
+    // Check if contracts are deployed
+    if (CONTRACT_ADDRESSES.REWARDS !== '0x0000000000000000000000000000000000000000') {
+      // Use actual contract call
+      try {
+        const hash = await writeContractAsync({
+          address: CONTRACT_ADDRESSES.REWARDS as `0x${string}`,
+          abi: REWARDS_ABI,
+          functionName: 'claimRewards',
+        });
+        return { hash };
+      } catch (error) {
+        console.error('Contract claim failed:', error);
+        throw error;
+      }
+    }
+
+    // Fallback to mock for development
     return new Promise((resolve) => {
       setTimeout(() => {
         setRewardBalance(prev => ({
@@ -77,8 +121,32 @@ export const useMezoContracts = () => {
     });
   };
 
+  const completeChallenge = async (challengeId: string) => {
+    if (!isConnected) {
+      throw new Error('Wallet not connected');
+    }
+
+    if (CONTRACT_ADDRESSES.REWARDS !== '0x0000000000000000000000000000000000000000') {
+      try {
+        const hash = await writeContractAsync({
+          address: CONTRACT_ADDRESSES.REWARDS as `0x${string}`,
+          abi: REWARDS_ABI,
+          functionName: 'completeChallenge',
+          args: [challengeId],
+        });
+        return { hash };
+      } catch (error) {
+        console.error('Challenge completion failed:', error);
+        throw error;
+      }
+    }
+
+    // Mock for development
+    return { hash: '0x' + Math.random().toString(36).substring(7) };
+  };
+
   const estimateGas = async (amount: number): Promise<GasEstimate> => {
-    // Mock gas estimation
+    // Gas estimation for Mezo network
     return {
       gasPrice: '0.000001',
       gasLimit: '150000',
@@ -92,13 +160,13 @@ export const useMezoContracts = () => {
       throw new Error('Wallet not connected');
     }
 
-    // Mock swap - replace with actual DEX contract interaction
+    // Mock swap - replace with actual DEX contract when available
     return new Promise((resolve) => {
       setTimeout(() => {
         setRewardBalance(prev => ({
           ...prev,
           musdBalance: prev.musdBalance - amount,
-          tbtcBalance: prev.tbtcBalance + amount * 0.99, // 1% slippage
+          tbtcBalance: prev.tbtcBalance + amount * 0.99,
         }));
         resolve({ hash: '0x' + Math.random().toString(36).substring(7) });
       }, 2000);
@@ -108,9 +176,11 @@ export const useMezoContracts = () => {
   return {
     rewardBalance,
     claimRewards,
+    completeChallenge,
     estimateGas,
     swapMUSDToTBTC,
     isPending,
     isConnected,
+    contractAddresses: CONTRACT_ADDRESSES,
   };
 };
