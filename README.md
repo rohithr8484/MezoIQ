@@ -104,7 +104,7 @@ Type: Oracle price feed contracts for real-time token pricing
 
 ### 🌐 Mezo Network Configuration
 
-
+```bash
 MEZO_CHAIN_ID=
 
 MEZO_BOAR_API_KEY=
@@ -114,9 +114,12 @@ MEZO_RPC_HTTP=
 MEZO_RPC_WS=
 
 MEZO_BLOCK_EXPLORER=
+```
 
 
 ### 🔮 Pyth Oracle Configuration
+
+```bash
 
 PYTH_HERMES_ENDPOINT=
 
@@ -125,16 +128,22 @@ PYTH_CONTRACT_ADDRESS=
 PYTH_BTC_USD_FEED_ID=
 
 PYTH_MUSD_USD_FEED_ID=
-
+```
 
 ### ☁️ Validation Cloud
 
+```bash
+
 MEZO_VALIDATION_CLOUD_MAINNET_URL=
 
+```
 
 ### 🔗 WalletConnect
 
+```bash
+
 WALLETCONNECT_PROJECT_ID=
+```
 
 
 ## 🚀 Quick Start
