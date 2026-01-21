@@ -1,8 +1,29 @@
 # 🪙 MezoIQ
 
-This platform enables building Bitcoin-powered experiences for crypto natives, mainstream users, or bridging both audiences. Think gaming, social platforms, e-commerce, entertainment, and other digital services.
-
 Mezo IQ is a gamified on-chain engagement and analytics platform built on a Bitcoin-powered blockchain, designed to maximize user participation and retention. It transforms everyday blockchain activity—such as transfers, staking, DeFi interactions, and shopping—into achievement-driven experiences. Users complete challenges, climb live leaderboards, and earn rewards by actively participating on-chain. Mezo IQ blends real-time activity tracking, competitive progression, and incentivized commerce, enabling users to unlock badges, levels, and rewards while gaining clear insights into their on-chain behavior.
+
+
+Gamified on-chain engagement app
+A consumer-facing application built on a Bitcoin-powered blockchain that rewards users for real on-chain activity.
+
+Achievement-driven activity tracking
+Everyday actions such as shopping and transactions are converted into measurable achievements and progress.
+
+Challenges & missions
+Users participate in time-bound and ongoing challenges linked directly to on-chain behavior.
+
+Live leaderboards
+Real-time rankings that promote competition and reward consistent engagement.
+
+Rewards & incentives system
+Users earn on-chain rewards through participation, challenge completion, and marketplace activity.
+
+Badges & level progression
+Visual progression system that reflects user activity, loyalty, and engagement depth.
+
+Integrated on-chain marketplace
+Commerce experiences where spending and participation unlock additional rewards and status.
+
 
 ## ✨ Features
 
