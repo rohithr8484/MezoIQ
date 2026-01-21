@@ -101,9 +101,9 @@ Type: Oracle price feed contracts for real-time token pricing
 
 ## Environment variables
 
-# ================================
-# 🌐 Mezo Network Configuration
-# ================================
+
+### 🌐 Mezo Network Configuration
+
 
 MEZO_CHAIN_ID=
 
@@ -115,9 +115,9 @@ MEZO_RPC_WS=
 
 MEZO_BLOCK_EXPLORER=
 
-# ================================
-# 🔮 Pyth Oracle Configuration
-# ================================
+
+### 🔮 Pyth Oracle Configuration
+
 PYTH_HERMES_ENDPOINT=
 
 PYTH_CONTRACT_ADDRESS=
@@ -126,14 +126,13 @@ PYTH_BTC_USD_FEED_ID=
 
 PYTH_MUSD_USD_FEED_ID=
 
-# ================================
-# ☁️ Validation Cloud
-# ================================
+
+### ☁️ Validation Cloud
+
 MEZO_VALIDATION_CLOUD_MAINNET_URL=
 
-# ================================
-# 🔗 WalletConnect
-# ================================
+
+### 🔗 WalletConnect
 
 WALLETCONNECT_PROJECT_ID=
 
