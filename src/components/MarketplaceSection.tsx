@@ -2,19 +2,21 @@ import { useState } from 'react';
 import { ProductCard } from './ProductCard';
 import { CheckoutDialog } from './CheckoutDialog';
 import { WalletConnectButton } from './WalletConnectButton';
+import { GiftCardsSection } from './GiftCardsSection';
 import { products, nftProducts, otherProducts } from '@/data/products';
 import type { Product } from '@/types/product';
-import { ShoppingBag, Wallet, Sparkles, Cpu, Wrench, Filter } from 'lucide-react';
+import { ShoppingBag, Wallet, Sparkles, Cpu, Wrench, Filter, Gift } from 'lucide-react';
 import { useMezoWallet } from '@/hooks/useMezoWallet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
-type CategoryFilter = 'all' | 'nft' | 'hardware' | 'software' | 'service';
+type CategoryFilter = 'all' | 'nft' | 'giftcard' | 'hardware' | 'software' | 'service';
 
 const categoryFilters: { id: CategoryFilter; label: string; icon: React.ElementType }[] = [
   { id: 'all', label: 'All', icon: Filter },
   { id: 'nft', label: 'NFTs', icon: Sparkles },
+  { id: 'giftcard', label: 'Gift Cards', icon: Gift },
   { id: 'hardware', label: 'Hardware', icon: Cpu },
   { id: 'software', label: 'Software', icon: ShoppingBag },
   { id: 'service', label: 'Services', icon: Wrench },
@@ -40,7 +42,9 @@ export const MarketplaceSection = () => {
 
   const filteredProducts = activeFilter === 'all' 
     ? products 
-    : products.filter(p => p.category === activeFilter);
+    : activeFilter === 'giftcard' 
+      ? [] 
+      : products.filter(p => p.category === activeFilter);
 
   return (
     <section className="py-8 md:py-12 px-4">
@@ -83,8 +87,10 @@ export const MarketplaceSection = () => {
             const Icon = filter.icon;
             const isActive = activeFilter === filter.id;
             const count = filter.id === 'all' 
-              ? products.length 
-              : products.filter(p => p.category === filter.id).length;
+              ? products.length + 6 // +6 for gift card types
+              : filter.id === 'giftcard'
+                ? 6 // gift card types
+                : products.filter(p => p.category === filter.id).length;
             
             return (
               <Button
@@ -99,13 +105,27 @@ export const MarketplaceSection = () => {
               >
                 <Icon className="w-4 h-4" />
                 {filter.label}
-                <Badge variant="secondary" className="ml-1 text-xs">
-                  {count}
-                </Badge>
+                {filter.id === 'giftcard' && (
+                  <Badge variant="secondary" className="ml-1 text-xs bg-primary/20 text-primary">
+                    New
+                  </Badge>
+                )}
+                {filter.id !== 'giftcard' && (
+                  <Badge variant="secondary" className="ml-1 text-xs">
+                    {count}
+                  </Badge>
+                )}
               </Button>
             );
           })}
         </div>
+
+        {/* Gift Cards Section */}
+        {(activeFilter === 'all' || activeFilter === 'giftcard') && (
+          <div className="mb-12">
+            <GiftCardsSection />
+          </div>
+        )}
 
         {/* NFT Featured Section */}
         {(activeFilter === 'all' || activeFilter === 'nft') && nftProducts.length > 0 && (
@@ -183,8 +203,8 @@ export const MarketplaceSection = () => {
           </div>
         )}
 
-        {/* Empty State */}
-        {filteredProducts.length === 0 && (
+        {/* Empty State - only show if no products AND not on gift card filter */}
+        {filteredProducts.length === 0 && activeFilter !== 'giftcard' && activeFilter !== 'all' && (
           <div className="text-center py-16">
             <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
               <ShoppingBag className="w-8 h-8 text-muted-foreground" />
