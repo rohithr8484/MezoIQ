@@ -10,8 +10,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, Gift, Check, Sparkles } from 'lucide-react';
+import { ChevronLeft, Gift, Check, Sparkles, Loader2, AlertCircle, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useMarketplaceContract } from '@/hooks/useMarketplaceContract';
+import { toast } from 'sonner';
 
 interface GiftCardDialogProps {
   open: boolean;
@@ -46,7 +48,18 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
   const [customAmount, setCustomAmount] = useState<string>('');
   const [senderName, setSenderName] = useState('');
   const [recipientName, setRecipientName] = useState('');
+  const [recipientAddress, setRecipientAddress] = useState('');
   const [personalMessage, setPersonalMessage] = useState('');
+  const [purchaseComplete, setPurchaseComplete] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { 
+    createGiftCard, 
+    isPurchasing, 
+    isApproving, 
+    isConnected,
+    musdBalance 
+  } = useMarketplaceContract();
 
   const resetForm = () => {
     setStep('type');
@@ -55,7 +68,10 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
     setCustomAmount('');
     setSenderName('');
     setRecipientName('');
+    setRecipientAddress('');
     setPersonalMessage('');
+    setPurchaseComplete(false);
+    setError(null);
   };
 
   const handleClose = () => {
@@ -69,6 +85,7 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
     if (currentIndex > 0) {
       setStep(steps[currentIndex - 1]);
     }
+    setError(null);
   };
 
   const handleNext = () => {
@@ -76,6 +93,51 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
     const currentIndex = steps.indexOf(step);
     if (currentIndex < steps.length - 1) {
       setStep(steps[currentIndex + 1]);
+    }
+  };
+
+  const handlePurchase = async () => {
+    if (!isConnected) {
+      toast.error('Please connect your wallet first');
+      return;
+    }
+
+    if (!selectedType) {
+      toast.error('Please select a gift card type');
+      return;
+    }
+
+    // Validate balance
+    if (musdBalance < amount) {
+      setError(`Insufficient MUSD balance. You have ${musdBalance.toFixed(4)} MUSD`);
+      return;
+    }
+
+    setError(null);
+
+    try {
+      const result = await createGiftCard(
+        selectedType.id,
+        amount,
+        senderName || 'Anonymous',
+        recipientName || 'Friend',
+        recipientAddress || undefined
+      );
+
+      if (result.success) {
+        setPurchaseComplete(true);
+        toast.success(`Gift card created! You earned ${(amount * 0.02).toFixed(4)} MUSD cashback!`, {
+          duration: 5000,
+        });
+
+        setTimeout(() => {
+          handleClose();
+        }, 2500);
+      }
+    } catch (err: any) {
+      console.error('Gift card creation error:', err);
+      setError(err.message || 'Transaction failed. Please try again.');
+      toast.error(err.message || 'Transaction failed');
     }
   };
 
@@ -92,11 +154,6 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
     }
   };
 
-  const getStepProgress = () => {
-    const steps: Step[] = ['type', 'amount', 'customize', 'confirm'];
-    return ((steps.indexOf(step) + 1) / steps.length) * 100;
-  };
-
   const canProceed = () => {
     switch (step) {
       case 'type':
@@ -106,11 +163,13 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
       case 'customize':
         return true;
       case 'confirm':
-        return true;
+        return isConnected && musdBalance >= amount;
       default:
         return false;
     }
   };
+
+  const isProcessing = isPurchasing || isApproving;
 
   const renderStepIndicator = () => (
     <div className="flex justify-center gap-2 mb-6">
@@ -165,9 +224,14 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
     <div className="space-y-6">
       <div className="text-center">
         <h3 className="text-lg font-semibold mb-4">Select Amount</h3>
-        <div className="text-5xl font-bold text-foreground mb-6">
+        <div className="text-5xl font-bold text-foreground mb-2">
           {amount} <span className="text-2xl text-primary">MUSD</span>
         </div>
+        {isConnected && (
+          <p className="text-sm text-muted-foreground">
+            Balance: <span className={musdBalance >= amount ? 'text-green-500' : 'text-destructive'}>{musdBalance.toFixed(4)} MUSD</span>
+          </p>
+        )}
       </div>
 
       <div className="grid grid-cols-4 gap-3">
@@ -280,6 +344,16 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
         </div>
 
         <div className="space-y-2">
+          <Label>Recipient Wallet Address (Optional)</Label>
+          <Input
+            placeholder="0x..."
+            value={recipientAddress}
+            onChange={(e) => setRecipientAddress(e.target.value)}
+          />
+          <p className="text-xs text-muted-foreground">Leave empty to send to yourself</p>
+        </div>
+
+        <div className="space-y-2">
           <Label>Personal Message (Optional)</Label>
           <Textarea
             placeholder="Write a personal message..."
@@ -294,67 +368,110 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
 
   const renderConfirmStep = () => (
     <div className="space-y-6">
-      <div className="text-center">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-          <Sparkles className="w-8 h-8 text-primary" />
+      {purchaseComplete ? (
+        <div className="flex flex-col items-center justify-center py-8 space-y-4 animate-fade-in">
+          <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
+            <Check className="w-8 h-8 text-green-500" />
+          </div>
+          <h3 className="text-xl font-semibold">Gift Card Created!</h3>
+          <p className="text-sm text-muted-foreground text-center">
+            Your gift card has been created and {(amount * 0.02).toFixed(4)} MUSD cashback earned!
+          </p>
         </div>
-        <h3 className="text-lg font-semibold mb-2">Confirm Your Gift Card</h3>
-        <p className="text-sm text-muted-foreground">Review your gift card details</p>
-      </div>
+      ) : (
+        <>
+          <div className="text-center">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Sparkles className="w-8 h-8 text-primary" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2">Confirm Your Gift Card</h3>
+            <p className="text-sm text-muted-foreground">Review your gift card details</p>
+          </div>
 
-      {/* Summary Card */}
-      {selectedType && (
-        <div className={cn(
-          'relative w-full aspect-[16/10] rounded-2xl bg-gradient-to-br p-6 text-white overflow-hidden',
-          selectedType.gradient
-        )}>
-          <div className="absolute inset-0 bg-black/10" />
-          <div className="relative z-10 h-full flex flex-col justify-between">
-            <div className="flex items-center gap-2">
-              <Gift className="w-5 h-5" />
-              <span className="font-semibold">Mezo IQ</span>
+          {error && (
+            <div className="flex items-center gap-3 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0" />
+              <p className="text-sm text-destructive">{error}</p>
             </div>
-            <div className="text-center">
-              <h4 className="text-2xl md:text-3xl font-bold drop-shadow-lg">{selectedType.name}</h4>
-              {personalMessage && (
-                <p className="text-sm mt-2 opacity-90 italic">"{personalMessage}"</p>
-              )}
-            </div>
-            <div className="flex justify-between items-end">
-              <div className="text-sm opacity-80">
-                {senderName && <div>From: {senderName}</div>}
-                {recipientName && <div>To: {recipientName}</div>}
+          )}
+
+          {!isConnected && (
+            <div className="flex flex-col items-center gap-4 py-6 px-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <Wallet className="w-12 h-12 text-destructive" />
+              <div className="text-center space-y-2">
+                <p className="text-sm font-semibold text-foreground">
+                  Wallet Not Connected
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Connect your wallet to purchase this gift card
+                </p>
               </div>
-              <span className="text-xl font-bold">{amount} MUSD</span>
+            </div>
+          )}
+
+          {/* Summary Card */}
+          {selectedType && (
+            <div className={cn(
+              'relative w-full aspect-[16/10] rounded-2xl bg-gradient-to-br p-6 text-white overflow-hidden',
+              selectedType.gradient
+            )}>
+              <div className="absolute inset-0 bg-black/10" />
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div className="flex items-center gap-2">
+                  <Gift className="w-5 h-5" />
+                  <span className="font-semibold">Mezo IQ</span>
+                </div>
+                <div className="text-center">
+                  <h4 className="text-2xl md:text-3xl font-bold drop-shadow-lg">{selectedType.name}</h4>
+                  {personalMessage && (
+                    <p className="text-sm mt-2 opacity-90 italic">"{personalMessage}"</p>
+                  )}
+                </div>
+                <div className="flex justify-between items-end">
+                  <div className="text-sm opacity-80">
+                    {senderName && <div>From: {senderName}</div>}
+                    {recipientName && <div>To: {recipientName}</div>}
+                  </div>
+                  <span className="text-xl font-bold">{amount} MUSD</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-3 p-4 bg-muted/50 rounded-xl">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Gift Card Type</span>
+              <span className="font-medium">{selectedType?.name}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Amount</span>
+              <span className="font-medium">{amount} MUSD</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Cashback (2%)</span>
+              <span className="font-medium text-primary">+{(amount * 0.02).toFixed(2)} MUSD</span>
+            </div>
+            {isConnected && (
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Your Balance</span>
+                <span className={cn('font-medium', musdBalance >= amount ? 'text-green-500' : 'text-destructive')}>
+                  {musdBalance.toFixed(4)} MUSD
+                </span>
+              </div>
+            )}
+            <div className="border-t border-border my-2" />
+            <div className="flex justify-between">
+              <span className="font-semibold">Total</span>
+              <span className="font-bold text-lg">{amount} MUSD</span>
             </div>
           </div>
-        </div>
+
+          <Badge variant="outline" className="w-full justify-center py-2 text-primary border-primary/30">
+            <Sparkles className="w-4 h-4 mr-2" />
+            Earn 2% cashback on this purchase!
+          </Badge>
+        </>
       )}
-
-      <div className="space-y-3 p-4 bg-muted/50 rounded-xl">
-        <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Gift Card Type</span>
-          <span className="font-medium">{selectedType?.name}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Amount</span>
-          <span className="font-medium">{amount} MUSD</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Cashback (2%)</span>
-          <span className="font-medium text-primary">+{(amount * 0.02).toFixed(2)} MUSD</span>
-        </div>
-        <div className="border-t border-border my-2" />
-        <div className="flex justify-between">
-          <span className="font-semibold">Total</span>
-          <span className="font-bold text-lg">{amount} MUSD</span>
-        </div>
-      </div>
-
-      <Badge variant="outline" className="w-full justify-center py-2 text-primary border-primary/30">
-        <Sparkles className="w-4 h-4 mr-2" />
-        Earn 2% cashback on this purchase!
-      </Badge>
     </div>
   );
 
@@ -362,12 +479,13 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader className="relative">
-          {step !== 'type' && (
+          {step !== 'type' && !purchaseComplete && (
             <Button
               variant="ghost"
               size="sm"
               onClick={handleBack}
               className="absolute left-0 top-0"
+              disabled={isProcessing}
             >
               <ChevronLeft className="w-4 h-4 mr-1" />
               Back
@@ -377,27 +495,50 @@ export const GiftCardDialog = ({ open, onClose }: GiftCardDialogProps) => {
             {step === 'type' && 'Create Gift Card'}
             {step === 'amount' && 'Select Amount'}
             {step === 'customize' && 'Customize Gift'}
-            {step === 'confirm' && 'Confirm Purchase'}
+            {step === 'confirm' && (purchaseComplete ? 'Success!' : 'Confirm Purchase')}
           </DialogTitle>
         </DialogHeader>
 
-        {renderStepIndicator()}
+        {!purchaseComplete && renderStepIndicator()}
 
         {step === 'type' && renderTypeStep()}
         {step === 'amount' && renderAmountStep()}
         {step === 'customize' && renderCustomizeStep()}
         {step === 'confirm' && renderConfirmStep()}
 
-        <div className="mt-6">
-          <Button
-            className="w-full"
-            size="lg"
-            disabled={!canProceed()}
-            onClick={step === 'confirm' ? handleClose : handleNext}
-          >
-            {step === 'confirm' ? 'Purchase Gift Card' : 'Continue'}
-          </Button>
-        </div>
+        {!purchaseComplete && (
+          <div className="mt-6">
+            <Button
+              className="w-full"
+              size="lg"
+              disabled={!canProceed() || isProcessing}
+              onClick={step === 'confirm' ? handlePurchase : handleNext}
+            >
+              {step === 'confirm' ? (
+                isApproving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Approving MUSD...
+                  </>
+                ) : isPurchasing ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Creating Gift Card...
+                  </>
+                ) : (
+                  `Purchase Gift Card (${amount} MUSD)`
+                )
+              ) : (
+                'Continue'
+              )}
+            </Button>
+            {step === 'confirm' && !purchaseComplete && (
+              <p className="text-xs text-center text-muted-foreground mt-2">
+                This will request a transaction signature from your wallet
+              </p>
+            )}
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
