@@ -24,6 +24,10 @@ Users earn on-chain rewards through participation, challenge completion, and mar
 - Badges & level progression
 Visual progression system that reflects user activity, loyalty, and engagement depth.
 
+<img width="705" height="340" alt="image" src="https://github.com/user-attachments/assets/deeb9740-9afb-4bc9-b40b-c641173bdb4a" />
+<p align="left"> <img src="https://img.shields.io/badge/Mezo-pink?style=flat-square" /> <img src="https://img.shields.io/badge/Challenge-yellow?style=flat-square" /> <img src="https://img.shields.io/badge/Bitcoin Bank-blue?style=flat-square" /> </p>
+
+
 
 
 ## ✨ Features
