@@ -176,7 +176,7 @@ WALLETCONNECT_PROJECT_ID=
 
 ```bash
 
-cd \MezoIQ-main
+cd MezoIQ
 
 # 1. Install dependencies
 npm install
