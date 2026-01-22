@@ -172,7 +172,7 @@ WALLETCONNECT_PROJECT_ID=
 
 ```bash
 
-cd C:\Users\ASUS\Downloads\MezoIQ-main\MezoIQ-main
+cd \MezoIQ-main
 
 # 1. Install dependencies
 npm install
