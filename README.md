@@ -7,7 +7,7 @@ Mezo IQ is a gamified on-chain engagement and analytics platform built on a Bitc
 Commerce experiences where spending and participation unlock additional rewards and status.
 
 - Gamified on-chain engagement app
-A consumer-facing application built on a Bitcoin-powered blockchain that rewards users for real on-chain activity.
+A consumer-facing marketplace with NFTs, Gift Cards and other items  built on a Mezo blockchain that rewards users for real on-chain activity.
 
 - Achievement-driven activity tracking
 Everyday actions such as shopping and transactions with MUSD are converted into measurable achievements and progress.
@@ -23,7 +23,6 @@ Users earn on-chain rewards through participation, challenge completion, and mar
 
 - Badges & level progression
 Visual progression system that reflects user activity, loyalty, and engagement depth.
-
 
 
 
