@@ -31,6 +31,6 @@ export const PYTH_CONFIG = {
   hermesEndpoint: 'https://hermes.pyth.network',
   priceFeeds: {
     BTC_USD: '0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43',
-    MUSD_USD: '0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722',
+    MUSD_USD: '0x0617a9b725011a126a2b9fd53563f4236501f32cf76d877644b943394606c6de',
   },
 } as const;
