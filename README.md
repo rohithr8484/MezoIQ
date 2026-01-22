@@ -10,7 +10,7 @@ Commerce experiences where spending and participation unlock additional rewards 
 A consumer-facing application built on a Bitcoin-powered blockchain that rewards users for real on-chain activity.
 
 - Achievement-driven activity tracking
-Everyday actions such as shopping and transactions are converted into measurable achievements and progress.
+Everyday actions such as shopping and transactions with MUSD are converted into measurable achievements and progress.
 
 - Challenges & missions
 Users participate in time-bound and ongoing challenges linked directly to on-chain behavior.
