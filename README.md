@@ -93,8 +93,7 @@ Mezo Network Configuration
 
 **Network:** Mezo Testnet & Mainnet
 
-**Native Currency:** BTC (Bitcoin, 18 decimals)
-
+**Native Currency:** MUSD 
 
 
 **RPC Endpoint:**            
