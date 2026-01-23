@@ -10,7 +10,7 @@ AI personalized Commerce application with experiences where shopping with MUSD t
 A consumer-facing marketplace with NFTs, Gift Cards and other items  built on a Mezo blockchain that rewards users for real on-chain activity.
 
 - Achievement-driven activity tracking
-Everyday actions such as shopping, gaming and transactions with MUSD are converted into measurable achievements and progress.
+Everyday actions such as shopping, gaming and transactions with MUSD are converted into measurable achievements and progress. There are so many reasons to start earning MUSD with gift card, NFT and other purchases!
 
 - Challenges & missions
 Users participate in time-bound and ongoing challenges linked directly to on-chain behavior.
