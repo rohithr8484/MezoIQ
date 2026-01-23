@@ -39,7 +39,7 @@ Connect popular Bitcoin wallets and manage transactions seamlessly with multi-wa
 Implement gamified experiences with Bitcoin rewards, leaderboards, and mini-games to engage users.
 
 ### 📱 Social Sharing
-Share Bitcoin achievements, referrals, and rewards socially across platforms.
+Share MUSD achievements, referrals, and rewards socially across platforms.
 
 ### 💰 MUSD Integration
 Seamless integration with MUSD for stable transactions and reward distribution.
