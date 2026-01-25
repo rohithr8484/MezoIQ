@@ -1,4 +1,7 @@
 import { Trophy, Gift, Network, ArrowRight } from 'lucide-react';
+import earnImage from '@/assets/how-it-works-earn.png';
+import rewardsImage from '@/assets/how-it-works-rewards.png';
+import platformImage from '@/assets/how-it-works-platform.png';
 
 export const HowItWorks = () => {
   const features = [
@@ -7,18 +10,21 @@ export const HowItWorks = () => {
       step: '01',
       title: 'Earn & Engage',
       description: 'Complete challenges, climb leaderboards, and earn rewards on a Bitcoin-powered blockchain platform designed for maximum engagement.',
+      image: earnImage,
     },
     {
       icon: Gift,
       step: '02',
       title: 'Programmable Rewards',
       description: 'Create custom incentive programs with Bitcoin-based loyalty rewards, micro-payments, and creator payouts that scale with your business.',
+      image: rewardsImage,
     },
     {
       icon: Network,
       step: '03',
       title: 'Cross-Platform Ready',
       description: 'Move assets seamlessly across supported platforms with full interoperability, creating a unified Bitcoin-powered digital economy.',
+      image: platformImage,
     },
   ];
 
@@ -45,12 +51,22 @@ export const HowItWorks = () => {
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="glass-card rounded-xl md:rounded-2xl p-6 md:p-8 group card-hover animate-fade-in-up relative"
+              className="glass-card rounded-xl md:rounded-2xl p-6 md:p-8 group card-hover animate-fade-in-up relative overflow-hidden"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               {/* Step indicator */}
-              <div className="absolute top-4 md:top-6 right-4 md:right-6 text-3xl md:text-4xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">
+              <div className="absolute top-4 md:top-6 right-4 md:right-6 text-3xl md:text-4xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors z-20">
                 {feature.step}
+              </div>
+              
+              {/* Image */}
+              <div className="relative w-full h-32 md:h-40 mb-4 rounded-lg overflow-hidden">
+                <img 
+                  src={feature.image} 
+                  alt={feature.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
               </div>
               
               <div className="space-y-3 md:space-y-4 relative z-10">

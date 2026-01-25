@@ -1,4 +1,7 @@
 import { Gamepad2, MessageSquare, ShoppingBag, TrendingUp } from 'lucide-react';
+import gamingImage from '@/assets/usecase-gaming.png';
+import socialImage from '@/assets/usecase-social.png';
+import ecommerceImage from '@/assets/usecase-ecommerce.png';
 
 export const UseCases = () => {
   const useCases = [
@@ -8,6 +11,7 @@ export const UseCases = () => {
       description:
         'Reward players with Bitcoin for completing missions, winning tournaments, or contributing to community events. Build sustainable in-game economies.',
       stats: '40% higher retention',
+      image: gamingImage,
     },
     {
       icon: MessageSquare,
@@ -15,6 +19,7 @@ export const UseCases = () => {
       description:
         'Incentivize creators and community members with Bitcoin rewards. Drive engagement through verified contributions and quality content.',
       stats: '3x engagement boost',
+      image: socialImage,
     },
     {
       icon: ShoppingBag,
@@ -22,6 +27,7 @@ export const UseCases = () => {
       description:
         'Deploy Bitcoin-based loyalty programs with instant rewards. Gamify shopping experiences with achievement-based incentives.',
       stats: '25% repeat purchases',
+      image: ecommerceImage,
     },
   ];
 
@@ -53,6 +59,16 @@ export const UseCases = () => {
             >
               {/* Hover gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Image */}
+              <div className="relative w-full h-32 md:h-40 mb-4 rounded-lg overflow-hidden">
+                <img 
+                  src={useCase.image} 
+                  alt={useCase.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              </div>
               
               <div className="space-y-4 md:space-y-5 relative z-10">
                 <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
