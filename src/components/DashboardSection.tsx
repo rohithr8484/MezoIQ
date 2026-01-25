@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useMezoContracts } from '@/hooks/useMezoContracts';
-import { Bitcoin, TrendingUp, Clock, CheckCircle, Wallet, ShoppingBag, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Bitcoin, TrendingUp, Clock, CheckCircle, Wallet, ShoppingBag, ArrowUpRight, ArrowDownRight, Gift, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { ClaimDialog } from './ClaimDialog';
 import { useChallenges } from '@/hooks/useChallenges';
@@ -12,15 +12,32 @@ import { WalletConnectButton } from './WalletConnectButton';
 import { format } from 'date-fns';
 
 export const DashboardSection = () => {
-  const { rewardBalance, isConnected } = useMezoContracts();
+  const { rewardBalance, isConnected, isEnrolled, enrollInRewards } = useMezoContracts();
   const { completeChallenge } = useChallenges();
   const { stats: purchaseStats } = usePurchases();
   const [showClaimDialog, setShowClaimDialog] = useState(false);
+  const [isEnrolling, setIsEnrolling] = useState(false);
 
   const handleClaimSuccess = () => {
     const result = completeChallenge('4');
     if (result.completed) {
       toast.success(`First Claim challenge completed! +${result.reward} points earned! 🎉`);
+    }
+  };
+
+  const handleEnroll = async () => {
+    setIsEnrolling(true);
+    try {
+      const result = enrollInRewards();
+      if (result.success) {
+        toast.success(`Welcome! You've received ${result.bonusPoints} MUSD welcome bonus! 🎉`);
+      } else {
+        toast.info('You are already enrolled in the rewards program');
+      }
+    } catch (error) {
+      toast.error('Failed to enroll in rewards program');
+    } finally {
+      setIsEnrolling(false);
     }
   };
 
@@ -73,6 +90,67 @@ export const DashboardSection = () => {
               Connect your wallet to view your dashboard, track rewards, and manage your assets
             </p>
             <WalletConnectButton />
+          </Card>
+        </div>
+      </section>
+    );
+  }
+
+  // Show enrollment CTA if connected but not enrolled
+  if (!isEnrolled) {
+    return (
+      <section className="py-8 md:py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Dashboard</h1>
+            <p className="text-muted-foreground">Track your rewards, purchases, and performance</p>
+          </div>
+          
+          <Card className="p-8 md:p-12 text-center glass-card border-primary/20">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-6">
+              <Gift className="w-10 h-10 text-primary" />
+            </div>
+            <h2 className="text-2xl font-bold mb-3 text-foreground">Join the Rewards Program</h2>
+            <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+              Start earning MUSD rewards by completing challenges, making purchases, and engaging with the platform. Get a <span className="text-primary font-semibold">10 MUSD welcome bonus</span> when you join!
+            </p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-xl mx-auto">
+              <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
+                <Sparkles className="w-6 h-6 text-primary mx-auto mb-2" />
+                <p className="text-sm font-medium">Daily Challenges</p>
+                <p className="text-xs text-muted-foreground">Earn up to 100 MUSD/day</p>
+              </div>
+              <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
+                <ShoppingBag className="w-6 h-6 text-primary mx-auto mb-2" />
+                <p className="text-sm font-medium">2% Cashback</p>
+                <p className="text-xs text-muted-foreground">On all purchases</p>
+              </div>
+              <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
+                <TrendingUp className="w-6 h-6 text-primary mx-auto mb-2" />
+                <p className="text-sm font-medium">Leaderboard</p>
+                <p className="text-xs text-muted-foreground">Compete for prizes</p>
+              </div>
+            </div>
+
+            <Button 
+              onClick={handleEnroll}
+              disabled={isEnrolling}
+              size="lg"
+              className="px-8"
+            >
+              {isEnrolling ? (
+                <>
+                  <span className="animate-spin mr-2">⏳</span>
+                  Enrolling...
+                </>
+              ) : (
+                <>
+                  <Gift className="w-5 h-5 mr-2" />
+                  Join & Get 10 MUSD Bonus
+                </>
+              )}
+            </Button>
           </Card>
         </div>
       </section>
