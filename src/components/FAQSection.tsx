@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'What can I buy with my rewards?',
     answer:
-      'Our marketplace offers a variety of products and services that can be purchased with MUSD or BTC. All purchases earn additional cashback rewards, creating a virtuous cycle of earning.',
+      'Our marketplace offers a variety of products and services that can be purchased with MUSD. All purchases earn additional cashback rewards, creating a virtuous cycle of earning.',
     icon: Coins,
   },
 ];
