@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
 
 interface UserProgress {
   streak: number;
@@ -8,14 +9,27 @@ interface UserProgress {
   claims: number;
   points: number;
   totalEarned: number;
+  enrolled: boolean;
+  enrolledAt: string | null;
 }
 
 const STORAGE_KEY = 'user_progress';
 
-const getInitialProgress = (): UserProgress => {
-  const stored = localStorage.getItem(STORAGE_KEY);
+const getStorageKey = (address: string | undefined) => {
+  return address ? `${STORAGE_KEY}_${address.toLowerCase()}` : STORAGE_KEY;
+};
+
+const getInitialProgress = (address: string | undefined): UserProgress => {
+  const key = getStorageKey(address);
+  const stored = localStorage.getItem(key);
   if (stored) {
-    return JSON.parse(stored);
+    const parsed = JSON.parse(stored);
+    // Ensure enrolled field exists for backwards compatibility
+    return {
+      ...parsed,
+      enrolled: parsed.enrolled ?? false,
+      enrolledAt: parsed.enrolledAt ?? null,
+    };
   }
   return {
     streak: 0,
@@ -25,17 +39,65 @@ const getInitialProgress = (): UserProgress => {
     claims: 0,
     points: 0,
     totalEarned: 0,
+    enrolled: false,
+    enrolledAt: null,
   };
 };
 
 export const useUserProgress = () => {
-  const [progress, setProgress] = useState<UserProgress>(getInitialProgress);
+  const { address, isConnected } = useAccount();
+  const [progress, setProgress] = useState<UserProgress>(() => getInitialProgress(address));
 
+  // Re-initialize progress when wallet changes
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-  }, [progress]);
+    if (isConnected && address) {
+      setProgress(getInitialProgress(address));
+    } else {
+      // Reset to defaults when disconnected
+      setProgress({
+        streak: 0,
+        lastLogin: null,
+        gameWins: 0,
+        shares: 0,
+        claims: 0,
+        points: 0,
+        totalEarned: 0,
+        enrolled: false,
+        enrolledAt: null,
+      });
+    }
+  }, [address, isConnected]);
+
+  // Persist progress when it changes
+  useEffect(() => {
+    if (isConnected && address) {
+      const key = getStorageKey(address);
+      localStorage.setItem(key, JSON.stringify(progress));
+    }
+  }, [progress, address, isConnected]);
+
+  const enrollInRewards = (): { success: boolean; bonusPoints: number } => {
+    if (progress.enrolled) {
+      return { success: false, bonusPoints: 0 };
+    }
+
+    const welcomeBonus = 10; // 10 MUSD welcome bonus
+    setProgress(prev => ({
+      ...prev,
+      enrolled: true,
+      enrolledAt: new Date().toISOString(),
+      points: prev.points + welcomeBonus,
+      totalEarned: prev.totalEarned + welcomeBonus,
+    }));
+
+    return { success: true, bonusPoints: welcomeBonus };
+  };
 
   const checkDailyLogin = (): { completed: boolean; reward: number } => {
+    if (!progress.enrolled) {
+      return { completed: false, reward: 0 };
+    }
+
     const today = new Date().toDateString();
     if (progress.lastLogin !== today) {
       const newStreak = progress.streak + 1;
@@ -62,6 +124,10 @@ export const useUserProgress = () => {
   };
 
   const recordGameWin = (): { completed: boolean; reward: number } => {
+    if (!progress.enrolled) {
+      return { completed: false, reward: 0 };
+    }
+
     const newWins = progress.gameWins + 1;
     console.log(`🎯 Game won. Progress: ${newWins}/5`);
     
@@ -83,6 +149,10 @@ export const useUserProgress = () => {
   };
 
   const recordShare = (): { completed: boolean; reward: number } => {
+    if (!progress.enrolled) {
+      return { completed: false, reward: 0 };
+    }
+
     const newShares = progress.shares + 1;
     console.log(`📣 Content shared. Progress: ${newShares}/3`);
     
@@ -104,6 +174,10 @@ export const useUserProgress = () => {
   };
 
   const recordClaim = (): { completed: boolean; reward: number } => {
+    if (!progress.enrolled) {
+      return { completed: false, reward: 0 };
+    }
+
     if (progress.claims === 0) {
       console.log(`💰 First reward claimed!`);
       setProgress(prev => ({
@@ -118,7 +192,7 @@ export const useUserProgress = () => {
   };
 
   const resetProgress = () => {
-    const initial = {
+    const initial: UserProgress = {
       streak: 0,
       lastLogin: null,
       gameWins: 0,
@@ -126,13 +200,20 @@ export const useUserProgress = () => {
       claims: 0,
       points: 0,
       totalEarned: 0,
+      enrolled: false,
+      enrolledAt: null,
     };
     setProgress(initial);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
+    if (address) {
+      const key = getStorageKey(address);
+      localStorage.setItem(key, JSON.stringify(initial));
+    }
   };
 
   return {
     progress,
+    isEnrolled: progress.enrolled,
+    enrollInRewards,
     checkDailyLogin,
     recordGameWin,
     recordShare,

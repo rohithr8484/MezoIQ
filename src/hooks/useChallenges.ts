@@ -3,7 +3,7 @@ import type { Challenge } from '@/types/rewards';
 import { useUserProgress } from './useUserProgress';
 
 export const useChallenges = () => {
-  const { progress, checkDailyLogin, recordGameWin, recordShare, recordClaim } = useUserProgress();
+  const { progress, isEnrolled, checkDailyLogin, recordGameWin, recordShare, recordClaim } = useUserProgress();
   
   const [challenges, setChallenges] = useState<Challenge[]>([
     {
@@ -50,6 +50,14 @@ export const useChallenges = () => {
   ]);
 
   useEffect(() => {
+    // Only show progress if enrolled
+    const currentProgress = isEnrolled ? progress : {
+      streak: 0,
+      gameWins: 0,
+      shares: 0,
+      claims: 0,
+    };
+
     setChallenges([
       {
         id: '1',
@@ -57,7 +65,7 @@ export const useChallenges = () => {
         description: 'Log in for 7 consecutive days',
         reward: 100,
         type: 'daily',
-        progress: progress.streak,
+        progress: currentProgress.streak,
         target: 7,
         completed: false,
         expiresAt: new Date(Date.now() + 86400000),
@@ -68,7 +76,7 @@ export const useChallenges = () => {
         description: 'Play 5 games in any supported dApp',
         reward: 250,
         type: 'gaming',
-        progress: progress.gameWins,
+        progress: currentProgress.gameWins,
         target: 5,
         completed: false,
       },
@@ -78,7 +86,7 @@ export const useChallenges = () => {
         description: 'Share on 3 social platforms',
         reward: 150,
         type: 'social',
-        progress: progress.shares,
+        progress: currentProgress.shares,
         target: 3,
         completed: false,
       },
@@ -88,14 +96,18 @@ export const useChallenges = () => {
         description: 'Claim your first MUSD rewards',
         reward: 50,
         type: 'daily',
-        progress: progress.claims,
+        progress: currentProgress.claims,
         target: 1,
-        completed: progress.claims >= 1,
+        completed: isEnrolled && progress.claims >= 1,
       },
     ]);
-  }, [progress]);
+  }, [progress, isEnrolled]);
 
   const completeChallenge = (challengeId: string) => {
+    if (!isEnrolled) {
+      return { completed: false, reward: 0 };
+    }
+
     let result = { completed: false, reward: 0 };
     
     switch (challengeId) {
@@ -135,5 +147,6 @@ export const useChallenges = () => {
     completeChallenge,
     updateProgress,
     userProgress: progress,
+    isEnrolled,
   };
 };

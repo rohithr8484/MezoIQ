@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useChallenges } from '@/hooks/useChallenges';
 import { Badge } from '@/components/ui/badge';
-import { Gamepad2, Users, Calendar, CheckCircle2 } from 'lucide-react';
+import { Gamepad2, Users, Calendar, CheckCircle2, Gift, Lock } from 'lucide-react';
 import { toast } from 'sonner';
 import { SocialShareDialog } from './SocialShareDialog';
 import { MiniGamesDialog } from './MiniGamesDialog';
+import { useMezoContracts } from '@/hooks/useMezoContracts';
 
 const typeIcons = {
   gaming: Gamepad2,
@@ -22,12 +23,33 @@ const typeColors = {
 };
 
 export const ChallengesSection = () => {
-  const { challenges, completeChallenge } = useChallenges();
+  const { challenges, completeChallenge, isEnrolled } = useChallenges();
+  const { isConnected, enrollInRewards } = useMezoContracts();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [gamesDialogOpen, setGamesDialogOpen] = useState(false);
   const [pendingChallengeId, setPendingChallengeId] = useState<string | null>(null);
+  const [isEnrolling, setIsEnrolling] = useState(false);
+
+  const handleEnroll = async () => {
+    setIsEnrolling(true);
+    try {
+      const result = enrollInRewards();
+      if (result.success) {
+        toast.success(`Welcome! You've received ${result.bonusPoints} MUSD welcome bonus! 🎉`);
+      }
+    } catch (error) {
+      toast.error('Failed to enroll');
+    } finally {
+      setIsEnrolling(false);
+    }
+  };
 
   const handleComplete = (id: string, title: string) => {
+    if (!isEnrolled) {
+      toast.error('Please join the rewards program first');
+      return;
+    }
+
     // If it's the Gaming Champion challenge, open games dialog
     if (id === '2') {
       setPendingChallengeId(id);
@@ -75,6 +97,34 @@ export const ChallengesSection = () => {
       }
     }
   };
+
+  // Show enrollment prompt if connected but not enrolled
+  if (isConnected && !isEnrolled) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold">Active Challenges</h2>
+          <Badge variant="outline" className="text-sm">
+            <Lock className="w-3 h-3 mr-1" />
+            Locked
+          </Badge>
+        </div>
+
+        <Card className="p-8 text-center glass-card border-primary/20">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-4">
+            <Gift className="w-8 h-8 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">Join Rewards to Unlock Challenges</h3>
+          <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+            Enroll in the rewards program to start completing challenges and earning MUSD. Get a 10 MUSD welcome bonus!
+          </p>
+          <Button onClick={handleEnroll} disabled={isEnrolling}>
+            {isEnrolling ? 'Enrolling...' : 'Join Rewards Program'}
+          </Button>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">

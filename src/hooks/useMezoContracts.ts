@@ -8,7 +8,7 @@ import { REWARDS_ABI, ERC20_ABI } from '@/contracts/abis';
 
 export const useMezoContracts = () => {
   const { address, isConnected } = useAccount();
-  const { progress } = useUserProgress();
+  const { progress, isEnrolled, enrollInRewards } = useUserProgress();
   const [rewardBalance, setRewardBalance] = useState<RewardBalance>({
     points: 0,
     pending: 0,
@@ -62,16 +62,32 @@ export const useMezoContracts = () => {
           pending: Number(formatEther(pendingMUSD)),
           claimed: Number(formatEther(claimedMUSD)),
         }));
-      } else {
-        // Fall back to local progress
+      } else if (isEnrolled) {
+        // Fall back to local progress only if enrolled
         setRewardBalance(prev => ({
           ...prev,
           points: progress.totalEarned,
           pending: progress.points,
         }));
+      } else {
+        // Not enrolled - show zeros
+        setRewardBalance(prev => ({
+          ...prev,
+          points: 0,
+          pending: 0,
+        }));
       }
+    } else {
+      // Not connected - reset to zeros
+      setRewardBalance({
+        points: 0,
+        pending: 0,
+        claimed: 0,
+        musdBalance: 0,
+        tbtcBalance: 0,
+      });
     }
-  }, [contractRewards, progress, isConnected]);
+  }, [contractRewards, progress, isConnected, isEnrolled]);
 
   // Update balances when contract data changes
   useEffect(() => {
@@ -89,6 +105,10 @@ export const useMezoContracts = () => {
   const claimRewards = async (amount: number) => {
     if (!isConnected) {
       throw new Error('Wallet not connected');
+    }
+
+    if (!isEnrolled) {
+      throw new Error('Not enrolled in rewards program');
     }
 
     // Check if contracts are deployed
@@ -124,6 +144,10 @@ export const useMezoContracts = () => {
   const completeChallenge = async (challengeId: string) => {
     if (!isConnected) {
       throw new Error('Wallet not connected');
+    }
+
+    if (!isEnrolled) {
+      throw new Error('Not enrolled in rewards program');
     }
 
     if (CONTRACT_ADDRESSES.REWARDS !== '0x0000000000000000000000000000000000000000') {
@@ -181,6 +205,8 @@ export const useMezoContracts = () => {
     swapMUSDToTBTC,
     isPending,
     isConnected,
+    isEnrolled,
+    enrollInRewards,
     contractAddresses: CONTRACT_ADDRESSES,
   };
 };
