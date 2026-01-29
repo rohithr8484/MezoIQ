@@ -86,11 +86,23 @@ Built with React, Vite, and TypeScript for smooth development and deployment.
 
 ## Mezo Testnet and Mainet Contracts
 
-Mezo Network Configuration
+**Mezo Network Configuration**
 
-**Chain ID:** 31612
+Connect your wallet to Mezo Testnet (RPC: https://rpc.test.mezo.org, chain ID 31611).
 
-**Network:** Mezo Testnet & Mainnet
+Get BTC + MEZO from faucet ( https://faucet.test.mezo.org/ )
+
+Open Mezo website (testnet)
+
+Deposit testnet BTC as collateral
+
+Borrow → Mint MUSD
+
+MUSD appears in your wallet
+
+- **Network:** Mezo Mainnet    **Chain ID:** `31612`
+- **Network:** Mezo Testnet    **Chain ID:** `31611`
+
 
 **Native Currency:** MUSD 
 
