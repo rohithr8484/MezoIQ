@@ -1,5 +1,6 @@
 import { WalletConnectButton } from './WalletConnectButton';
 import { BoarWalletButton } from './BoarWalletButton';
+import { MezoPassportButton } from './MezoPassportButton';
 import { ValidationCloudService } from './ValidationCloudService';
 import { AnimatedBackground } from './AnimatedBackground';
 import { Coins, Zap, Trophy, Shield, Lock, Globe } from 'lucide-react';
@@ -106,6 +107,9 @@ export const Hero = ({ onEnterApp }: HeroProps) => {
             </div>
             <div className="w-full sm:w-auto transform hover:scale-105 transition-transform duration-300">
               <BoarWalletButton />
+            </div>
+            <div className="w-full sm:w-auto transform hover:scale-105 transition-transform duration-300">
+              <MezoPassportButton />
             </div>
           </div>
 
