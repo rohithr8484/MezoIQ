@@ -107,7 +107,7 @@ MUSD appears in your wallet
 **Native Currency:** MUSD 
 
 
-**RPC Endpoint:**            
+**Boar RPC Endpoint:**            
 
 https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 
