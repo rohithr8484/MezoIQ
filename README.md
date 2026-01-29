@@ -84,9 +84,8 @@ Built with React, Vite, and TypeScript for smooth development and deployment.
 <img width="1024" height="1536" alt="ChatGPT Image Jan 18, 2026, 05_30_28 PM" src="https://github.com/user-attachments/assets/8346d60c-5a66-4279-b3ee-6542976f4f27" />
 
 
-## Mezo Testnet and Mainet Contracts
 
-**Mezo Network Configuration**
+## Mezo Network Configuration
 
 Connect your wallet to Mezo Testnet (RPC: https://rpc.test.mezo.org, chain ID 31611).
 
@@ -117,6 +116,8 @@ https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c
 
 https://explorer.mezo.org
 
+
+## Mezo Testnet and Mainet Contracts
 
 ## **Pyth Oracle Contracts (Price Feeds)**
 
