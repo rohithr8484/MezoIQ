@@ -1,10 +1,10 @@
-# 🪙 MezoIQ - Marketplace to buy NFTs, gift cards and other items with MUSD and earn rewards 
+# 🪙 MezoIQ - Marketplace to buy NFTs, ordinals, gift cards and other items with MUSD and earn rewards 
 
 Mezo IQ is a gamified on-chain engagement and analytics platform built on the Mezo Bitcoin-powered blockchain, designed to drive sustained user participation and retention. It transforms real on-chain activity — including buying products with MUSD, DeFi interactions, and commerce — into achievement-driven experiences rooted in verifiable blockchain behavior. Users complete challenges, climb live leaderboards, and earn rewards by actively participating across the Mezo ecosystem. Mezo IQ combines real-time activity tracking, competitive progression, and an on-chain rewards marketplace, enabling users to unlock badges, levels, and MUSD-denominated incentives while gaining clear insights into their on-chain footprint. 
 
 **Integrated on-chain marketplace engagement app**
   
-AI personalized Commerce application with experiences where shopping with MUSD to unlock additional reward points for buying NFTS, gift cards built on a Mezo blockchain that rewards users for real on-chain activity.
+AI personalized Commerce application with experiences where shopping with MUSD to unlock additional reward points for buying NFTS, ordinals, gift cards built on a Mezo blockchain that rewards users for real on-chain activity.
 
 **Achievement-driven activity tracking**
   
