@@ -2,31 +2,27 @@
 
 Mezo IQ is a gamified on-chain engagement and analytics platform built on the Mezo Bitcoin-powered blockchain, designed to drive sustained user participation and retention. It transforms real on-chain activity — including buying products with MUSD, DeFi interactions, and commerce — into achievement-driven experiences rooted in verifiable blockchain behavior. Users complete challenges, climb live leaderboards, and earn rewards by actively participating across the Mezo ecosystem. Mezo IQ combines real-time activity tracking, competitive progression, and an on-chain rewards marketplace, enabling users to unlock badges, levels, and MUSD-denominated incentives while gaining clear insights into their on-chain footprint. 
 
-- Integrated on-chain marketplace
+**Integrated on-chain marketplace engagement app**
   
-AI personalized Commerce application with experiences where shopping with MUSD to unlock additional reward points for buying NFTS, gift cards, streaming and gaming,.
+AI personalized Commerce application with experiences where shopping with MUSD to unlock additional reward points for buying NFTS, gift cards, streaming built on a Mezo blockchain that rewards users for real on-chain activity.
 
-- Gamified on-chain engagement app
-  
-A consumer-facing marketplace with NFTs, Gift Cards and other items  built on a Mezo blockchain that rewards users for real on-chain activity.
-
-- Achievement-driven activity tracking
+**Achievement-driven activity tracking**
   
 Everyday actions such as shopping, gaming and transactions with MUSD are converted into measurable achievements and progress. There are so many reasons to start earning MUSD with gift card, NFT and other purchases!
 
-- Challenges & missions
+**Challenges & missions**
   
 Users participate in time-bound and ongoing challenges linked directly to on-chain behavior.
 
-- Live leaderboards
+**Live leaderboards**
   
 Real-time rankings that promote competition and reward consistent engagement.
 
-- Rewards & incentives system
+**Rewards & incentives system**
   
 Users earn on-chain rewards through participation, challenge completion, and marketplace activity.
 
-- Badges & level progression
+**Badges & level progression**
   
 Visual progression system that reflects user activity, loyalty, and engagement depth.
 
