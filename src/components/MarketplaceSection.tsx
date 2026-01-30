@@ -3,19 +3,20 @@ import { ProductCard } from './ProductCard';
 import { CheckoutDialog } from './CheckoutDialog';
 import { WalletConnectButton } from './WalletConnectButton';
 import { GiftCardsSection } from './GiftCardsSection';
-import { products, nftProducts, otherProducts } from '@/data/products';
+import { products, nftProducts, ordinalProducts, otherProducts } from '@/data/products';
 import type { Product } from '@/types/product';
-import { ShoppingBag, Wallet, Sparkles, Cpu, Wrench, Filter, Gift } from 'lucide-react';
+import { ShoppingBag, Wallet, Sparkles, Cpu, Wrench, Filter, Gift, Bitcoin } from 'lucide-react';
 import { useMezoWallet } from '@/hooks/useMezoWallet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
-type CategoryFilter = 'all' | 'nft' | 'giftcard' | 'hardware' | 'software' | 'service';
+type CategoryFilter = 'all' | 'nft' | 'ordinal' | 'giftcard' | 'hardware' | 'software' | 'service';
 
 const categoryFilters: { id: CategoryFilter; label: string; icon: React.ElementType }[] = [
   { id: 'all', label: 'All', icon: Filter },
   { id: 'nft', label: 'NFTs', icon: Sparkles },
+  { id: 'ordinal', label: 'Ordinals', icon: Bitcoin },
   { id: 'giftcard', label: 'Gift Cards', icon: Gift },
   { id: 'hardware', label: 'Hardware', icon: Cpu },
   { id: 'software', label: 'Software', icon: ShoppingBag },
@@ -44,7 +45,9 @@ export const MarketplaceSection = () => {
     ? products 
     : activeFilter === 'giftcard' 
       ? [] 
-      : products.filter(p => p.category === activeFilter);
+      : activeFilter === 'ordinal'
+        ? ordinalProducts
+        : products.filter(p => p.category === activeFilter);
 
   return (
     <section className="py-8 md:py-12 px-4">
@@ -90,7 +93,9 @@ export const MarketplaceSection = () => {
               ? products.length + 6 // +6 for gift card types
               : filter.id === 'giftcard'
                 ? 6 // gift card types
-                : products.filter(p => p.category === filter.id).length;
+                : filter.id === 'ordinal'
+                  ? ordinalProducts.length
+                  : products.filter(p => p.category === filter.id).length;
             
             return (
               <Button
@@ -173,8 +178,57 @@ export const MarketplaceSection = () => {
           </div>
         )}
 
+        {/* Ordinals Section */}
+        {(activeFilter === 'all' || activeFilter === 'ordinal') && ordinalProducts.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <Bitcoin className="w-6 h-6 text-primary" />
+              <h2 className="text-2xl font-bold">Bitcoin Ordinals</h2>
+              <Badge className="bg-orange-500/10 text-orange-400 border-orange-500/20">
+                {ordinalProducts.length} items
+              </Badge>
+              <Badge variant="secondary" className="bg-primary/20 text-primary">
+                On-Chain
+              </Badge>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(activeFilter === 'ordinal' ? ordinalProducts : ordinalProducts.slice(0, 3)).map((product, index) => (
+                <div
+                  key={product.id}
+                  className="relative group animate-fade-in-up"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {product.rarity && (
+                    <Badge 
+                      className={cn(
+                        'absolute top-4 right-4 z-10 border',
+                        rarityColors[product.rarity]
+                      )}
+                    >
+                      {product.rarity.charAt(0).toUpperCase() + product.rarity.slice(1)}
+                    </Badge>
+                  )}
+                  {product.collection && (
+                    <Badge 
+                      variant="outline"
+                      className="absolute top-4 left-4 z-10 bg-background/80 backdrop-blur-sm border-orange-500/30 text-orange-400"
+                    >
+                      {product.collection}
+                    </Badge>
+                  )}
+                  <ProductCard
+                    product={product}
+                    onCheckout={handleCheckout}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Other Products */}
-        {(activeFilter === 'all' ? otherProducts.length > 0 : activeFilter !== 'nft' && filteredProducts.length > 0) && (
+        {(activeFilter === 'all' ? otherProducts.length > 0 : activeFilter !== 'nft' && activeFilter !== 'ordinal' && filteredProducts.length > 0) && (
           <div>
             {activeFilter === 'all' && (
               <div className="flex items-center gap-3 mb-6">

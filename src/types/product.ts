@@ -4,7 +4,7 @@ export interface Product {
   description: string;
   image: string;
   priceUSD: number;
-  category: 'hardware' | 'software' | 'service' | 'nft';
+  category: 'hardware' | 'software' | 'service' | 'nft' | 'ordinal';
   collection?: string;
   rarity?: 'common' | 'rare' | 'epic' | 'legendary';
 }
