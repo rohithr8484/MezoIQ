@@ -8,7 +8,7 @@ AI personalized Commerce application with experiences where shopping with MUSD t
 
 **Achievement-driven activity tracking**
   
-Everyday actions such as shopping, gaming and transactions with MUSD are converted into measurable achievements and progress. There are so many reasons to start earning MUSD with gift card, NFT and other purchases!
+Everyday actions such as shopping, gaming and transactions with MUSD are converted into measurable achievements and progress. There are so many reasons to start spending MUSD with gift card, NFT and other purchases!
 
 **Challenges & missions**
   
