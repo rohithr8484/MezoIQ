@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
+    force: true,
     include: ['buffer', '@mezo-org/passport'],
     esbuildOptions: {
       define: {
