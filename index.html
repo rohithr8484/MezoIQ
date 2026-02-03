@@ -23,18 +23,7 @@
   </head>
 
   <body>
-    <script>
-      // Polyfills for Node.js globals needed by @mezo-org/passport
-      if (typeof global === 'undefined') {
-        window.global = window;
-      }
-      if (typeof Buffer === 'undefined') {
-        window.Buffer = window.Buffer || { isBuffer: () => false };
-      }
-      if (typeof process === 'undefined') {
-        window.process = { env: {}, version: '', browser: true };
-      }
-    </script>
+    <!-- Node.js polyfills are handled by vite-plugin-node-polyfills -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
