@@ -57,10 +57,11 @@ npm run deploy:local
 ## Contract Addresses
 
 After deployment, update the addresses in `src/contracts/addresses.ts`:
-- MUSD Token: `0x...`
-- tBTC Token: `0x...`
-- MezoRewards: `0x...`
-- MezoMarketplace: `0x...`
+
+MUSD Token deployed to: 0x184bdc7B5cef1876622E67EB771fb2BD6a1A39D2
+tBTC Token deployed to: 0x6f4336550306eC3F5a66c20aeE59799F6A4cef93
+MezoRewards deployed to: 0xD2751343c6Ea9a849e38244D6667dAF3fF2870Fe
+MezoMarketplace deployed to: 0x7C1F7D7C4224F6ED8320c00DEF3b93608FE545C1
 
 ## Testing
 
