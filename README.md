@@ -207,6 +207,8 @@ npx hardhat compile
 # 4. Deploy to Mezo
 npx hardhat run scripts/deploy.ts --network mezo
 
+npx hardhat run scripts/deploy.ts --network mezoMats
+
 ```
 ## 🚀 Quick Start
 
@@ -251,7 +253,6 @@ npm run type-check
 
 ## Folder structure
 <img width="438" height="897" alt="image" src="https://github.com/user-attachments/assets/da3e3cc8-dd08-4abb-8b39-db63e59b4c41" />
-
 
 
 ## 🤝 Contributing
